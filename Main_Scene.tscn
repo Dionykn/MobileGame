@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://ctrkmtnq8phux"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Statusbar" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Statusbar"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.039
+offset_bottom = 0.079998
+
+[node name="PanelContainer" type="PanelContainer" parent="Statusbar/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Statusbar/Control/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Statusbar/Control/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Date" type="Label" parent="Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Day <#> <time>"
+
+[node name="Location" type="Label" parent="Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 20
+text = "<location>"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Gameplay" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Gameplay"]
+layout_mode = 3
+anchor_top = 0.033
+anchor_right = 1.0
+anchor_bottom = 0.897
+offset_top = -0.479996
+offset_bottom = 0.679932
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="Gameplay/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Navigationbar" type="CanvasLayer" parent="."]
