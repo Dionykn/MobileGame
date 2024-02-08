@@ -1,14 +1,67 @@
-[gd_scene format=3 uid="uid://ctrkmtnq8phux"]
+[gd_scene load_steps=6 format=3 uid="uid://ctrkmtnq8phux"]
+
+[ext_resource type="Texture2D" uid="uid://bnc3x2vt28sgq" path="res://bg_Streets.jpg" id="1_t3pgc"]
+[ext_resource type="Script" path="res://MainScene.gd" id="2_rn8ao"]
+[ext_resource type="PackedScene" uid="uid://d17pysnt8wjns" path="res://Home.tscn" id="3_5e14e"]
+[ext_resource type="PackedScene" uid="uid://8ud7l8a5unlw" path="res://Adventure.tscn" id="4_bg615"]
+[ext_resource type="PackedScene" uid="uid://53wf6vfqcarf" path="res://Survivor.tscn" id="5_g10th"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("2_rn8ao")
+
+[node name="Gameplay" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Gameplay"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 6
+
+[node name="TextureRect" type="TextureRect" parent="Gameplay/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_t3pgc")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="Gameplay/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 114
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 242
+
+[node name="PanelContainer" type="PanelContainer" parent="Gameplay/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Home_tscn" parent="Gameplay" instance=ExtResource("3_5e14e")]
+
+[node name="Adventure_tscn" parent="Gameplay" instance=ExtResource("4_bg615")]
+visible = false
+
+[node name="Survivor_tscn" parent="Gameplay" instance=ExtResource("5_g10th")]
+visible = false
 
 [node name="Statusbar" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="Statusbar"]
 layout_mode = 3
 anchor_right = 1.0
-anchor_bottom = 0.039
-offset_bottom = 0.079998
+anchor_bottom = 0.041
+offset_bottom = 0.0399971
 
 [node name="PanelContainer" type="PanelContainer" parent="Statusbar/Control"]
 layout_mode = 1
@@ -31,36 +84,71 @@ layout_mode = 2
 [node name="Date" type="Label" parent="Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 32
 text = "Day <#> <time>"
 
 [node name="Location" type="Label" parent="Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 32
 text = "<location>"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Gameplay" type="CanvasLayer" parent="."]
+[node name="Clock" type="Timer" parent="Statusbar/Control"]
+wait_time = 6.0
+autostart = true
 
-[node name="Control" type="Control" parent="Gameplay"]
+[node name="Navigationbar" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Navigationbar"]
 layout_mode = 3
-anchor_top = 0.033
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.897
-offset_top = -0.479996
-offset_bottom = 0.679932
-metadata/_edit_use_anchors_ = true
+anchor_bottom = 1.0
+offset_top = -192.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Gameplay/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="Navigationbar/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -1.0
-offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Navigationbar" type="CanvasLayer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="Navigationbar/Control/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Navigationbar/Control/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Home" type="Button" parent="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Home"
+
+[node name="Adventure" type="Button" parent="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Adventure"
+
+[node name="Survivor" type="Button" parent="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Survivor"
+
+[connection signal="timeout" from="Statusbar/Control/Clock" to="." method="_on_clock_timeout"]
+[connection signal="pressed" from="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Home" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Adventure" to="." method="_on_adventure_pressed"]
+[connection signal="pressed" from="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Survivor" to="." method="_on_survivor_pressed"]
