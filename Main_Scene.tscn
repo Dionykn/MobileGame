@@ -48,9 +48,9 @@ theme_override_constants/margin_bottom = 242
 layout_mode = 2
 
 [node name="Home_tscn" parent="Gameplay" instance=ExtResource("3_5e14e")]
+visible = false
 
 [node name="Adventure_tscn" parent="Gameplay" instance=ExtResource("4_bg615")]
-visible = false
 
 [node name="Survivor_tscn" parent="Gameplay" instance=ExtResource("5_g10th")]
 visible = false
