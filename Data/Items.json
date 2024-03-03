@@ -1,0 +1,1742 @@
+{
+  "1001": {
+    "Item Name": "Pistol ammo box",
+    "Loot Category": "Ammo",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1002": {
+    "Item Name": "Pistol round",
+    "Loot Category": "Ammo",
+    "Rarity": 0,
+    "Weight": 0.01,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1003": {
+    "Item Name": "Rifle ammo box",
+    "Loot Category": "Ammo",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1004": {
+    "Item Name": "Rifle round",
+    "Loot Category": "Ammo",
+    "Rarity": 0,
+    "Weight": 0.02,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1005": {
+    "Item Name": "Shotgun ammo box",
+    "Loot Category": "Ammo",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1006": {
+    "Item Name": "Shotgun shell",
+    "Loot Category": "Ammo",
+    "Rarity": 0,
+    "Weight": 0.05,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1007": {
+    "Item Name": "Cooler bag",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1008": {
+    "Item Name": "Duffelbag",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": 25,
+    "Durability": null
+  },
+  "1009": {
+    "Item Name": "Hiking backpack",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 4,
+    "Weight": 2,
+    "Capacity": 40,
+    "Durability": null
+  },
+  "1010": {
+    "Item Name": "Large duffelbag",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": 35,
+    "Durability": null
+  },
+  "1011": {
+    "Item Name": "Military backpack",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 2,
+    "Weight": 3,
+    "Capacity": 50,
+    "Durability": null
+  },
+  "1012": {
+    "Item Name": "School backpack",
+    "Loot Category": [
+      "Bags",
+      "Containers"
+    ],
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1013": {
+    "Item Name": "Firefighter gloves",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1014": {
+    "Item Name": "Firefighter helmet",
+    "Loot Category": "Clothes",
+    "Rarity": 1,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1015": {
+    "Item Name": "Firefighter jacket",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": 3,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1016": {
+    "Item Name": "Firefighter pants",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": 3,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1017": {
+    "Item Name": "Jeans",
+    "Loot Category": "Clothes",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1018": {
+    "Item Name": "Leather gloves",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1019": {
+    "Item Name": "Leather jacket",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1020": {
+    "Item Name": "Military helmet",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": 3,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1021": {
+    "Item Name": "Motor helmet",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1022": {
+    "Item Name": "Overall",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1023": {
+    "Item Name": "Padded pants",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1024": {
+    "Item Name": "Running shoes",
+    "Loot Category": "Clothes",
+    "Rarity": 2,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1025": {
+    "Item Name": "Safety boots",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1026": {
+    "Item Name": "Shoes",
+    "Loot Category": "Clothes",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1027": {
+    "Item Name": "T-shirt",
+    "Loot Category": "Clothes",
+    "Rarity": 1,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1028": {
+    "Item Name": "Wading suit",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1029": {
+    "Item Name": "Windbreaker",
+    "Loot Category": "Clothes",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1030": {
+    "Item Name": "Winter gloves",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1031": {
+    "Item Name": "Winter jacket",
+    "Loot Category": "Clothes",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1032": {
+    "Item Name": "Bowl",
+    "Loot Category": "Containers",
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": "0.5",
+    "Durability": null
+  },
+  "1033": {
+    "Item Name": "Empty bottle",
+    "Loot Category": "Containers",
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": 1,
+    "Durability": null
+  },
+  "1034": {
+    "Item Name": "Empty large bottle",
+    "Loot Category": "Containers",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": 2,
+    "Durability": null
+  },
+  "1035": {
+    "Item Name": "Beer",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1036": {
+    "Item Name": "Bottle of cola",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1037": {
+    "Item Name": "Energy drink",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1038": {
+    "Item Name": "Iced coffee",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1039": {
+    "Item Name": "Large water bottle",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1040": {
+    "Item Name": "Red wine",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1041": {
+    "Item Name": "Water bottle",
+    "Loot Category": "Drinks",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1042": {
+    "Item Name": "White wine",
+    "Loot Category": "Drinks",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1043": {
+    "Item Name": "Liqour",
+    "Loot Category": [
+      "Drinks",
+      "Medical"
+    ],
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1044": {
+    "Item Name": "Apple",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1045": {
+    "Item Name": "Banana",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1046": {
+    "Item Name": "Bread",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1047": {
+    "Item Name": "Broccoli",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1048": {
+    "Item Name": "Cabbage",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1049": {
+    "Item Name": "Cake",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1050": {
+    "Item Name": "Carrots",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1051": {
+    "Item Name": "Carton of eggs",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1052": {
+    "Item Name": "Champignons",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1053": {
+    "Item Name": "Cheese",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1054": {
+    "Item Name": "Chicken filet",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1055": {
+    "Item Name": "Cooked pasta",
+    "Loot Category": "Fresh food",
+    "Rarity": 0,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1056": {
+    "Item Name": "Cooked rice",
+    "Loot Category": "Fresh food",
+    "Rarity": 0,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1057": {
+    "Item Name": "Grapes",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1058": {
+    "Item Name": "Leftovers",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1059": {
+    "Item Name": "Lobster",
+    "Loot Category": "Fresh food",
+    "Rarity": 4,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1060": {
+    "Item Name": "Milk",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1061": {
+    "Item Name": "Orange",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1062": {
+    "Item Name": "Pear",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1063": {
+    "Item Name": "Porkchop",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1064": {
+    "Item Name": "Potato",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1065": {
+    "Item Name": "Salmon filet",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1066": {
+    "Item Name": "Slice of bread",
+    "Loot Category": "Fresh food",
+    "Rarity": 0,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1067": {
+    "Item Name": "Spinach",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1068": {
+    "Item Name": "Steak",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1069": {
+    "Item Name": "Strawberries",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1070": {
+    "Item Name": "Tofu",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1071": {
+    "Item Name": "Tuna filet",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1072": {
+    "Item Name": "Wild berries",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1073": {
+    "Item Name": "Wild mushrooms",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1074": {
+    "Item Name": "Yogurt",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1075": {
+    "Item Name": "Generator",
+    "Loot Category": [
+      "Furniture",
+      "Containers"
+    ],
+    "Rarity": 4,
+    "Weight": 10,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1076": {
+    "Item Name": "Fore grip",
+    "Loot Category": "Gun attachments",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1077": {
+    "Item Name": "Pistol drum mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 4,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1078": {
+    "Item Name": "Pistol extended mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 3,
+    "Weight": 0.3,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1079": {
+    "Item Name": "Pistol mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1080": {
+    "Item Name": "Precision laser",
+    "Loot Category": "Gun attachments",
+    "Rarity": 2,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1081": {
+    "Item Name": "Red dot sight",
+    "Loot Category": "Gun attachments",
+    "Rarity": 2,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1082": {
+    "Item Name": "Rifle drum mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 4,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1083": {
+    "Item Name": "Rifle extended mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 3,
+    "Weight": 0.6,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1084": {
+    "Item Name": "Rifle mag",
+    "Loot Category": "Gun attachments",
+    "Rarity": 2,
+    "Weight": 0.4,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1085": {
+    "Item Name": "Suppressor",
+    "Loot Category": "Gun attachments",
+    "Rarity": 3,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1086": {
+    "Item Name": "Pistol",
+    "Loot Category": "Guns",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1087": {
+    "Item Name": "Rifle",
+    "Loot Category": "Guns",
+    "Rarity": 4,
+    "Weight": 3,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1088": {
+    "Item Name": "Shotgun",
+    "Loot Category": "Guns",
+    "Rarity": 4,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1089": {
+    "Item Name": "Airfryer",
+    "Loot Category": [
+      "Kitchenware",
+      "Containers"
+    ],
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": 2,
+    "Durability": null
+  },
+  "1090": {
+    "Item Name": "Cooking pot",
+    "Loot Category": [
+      "Kitchenware",
+      "Containers"
+    ],
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": 4,
+    "Durability": null
+  },
+  "1091": {
+    "Item Name": "Electric kettle",
+    "Loot Category": [
+      "Kitchenware",
+      "Containers"
+    ],
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": 2,
+    "Durability": null
+  },
+  "1092": {
+    "Item Name": "Frying pan",
+    "Loot Category": [
+      "Kitchenware",
+      "Containers"
+    ],
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": 2,
+    "Durability": null
+  },
+  "1093": {
+    "Item Name": "Table grill",
+    "Loot Category": [
+      "Kitchenware",
+      "Containers"
+    ],
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": 2,
+    "Durability": null
+  },
+  "1094": {
+    "Item Name": "Adult magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1095": {
+    "Item Name": "Adventure magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1096": {
+    "Item Name": "Automotive magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1097": {
+    "Item Name": "Cooking magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1098": {
+    "Item Name": "Crafts magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1099": {
+    "Item Name": "Entertaining book",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.3",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1100": {
+    "Item Name": "Entertaining magazine",
+    "Loot Category": "Literature",
+    "Rarity": 1,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1101": {
+    "Item Name": "Fashion magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1102": {
+    "Item Name": "Gardening magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1103": {
+    "Item Name": "Generator manual",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1104": {
+    "Item Name": "Health magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1105": {
+    "Item Name": "Science magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1106": {
+    "Item Name": "Technology magazine",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1107": {
+    "Item Name": "Crate labled \"FOOD\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1108": {
+    "Item Name": "Crate labled \"LITERATURE\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1109": {
+    "Item Name": "Crate labled \"MEDICAL\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1110": {
+    "Item Name": "Crate labled \"PARTS\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1111": {
+    "Item Name": "Crate labled \"TOOLS\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1112": {
+    "Item Name": "Crate labled \"WEAPONS\"",
+    "Loot Category": "Loot crates",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1113": {
+    "Item Name": "Gun case",
+    "Loot Category": "Loot crates",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1114": {
+    "Item Name": "Adhesive bandage",
+    "Loot Category": "Medical",
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1115": {
+    "Item Name": "Alcohol wipes",
+    "Loot Category": "Medical",
+    "Rarity": 2,
+    "Weight": "0.5",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1116": {
+    "Item Name": "Bandage",
+    "Loot Category": "Medical",
+    "Rarity": 2,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1117": {
+    "Item Name": "Bottle of desinfectant",
+    "Loot Category": "Medical",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1118": {
+    "Item Name": "Baseball bat",
+    "Loot Category": "Melee weapons",
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 200
+  },
+  "1119": {
+    "Item Name": "Hatchet",
+    "Loot Category": "Melee weapons",
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1120": {
+    "Item Name": "Police baton",
+    "Loot Category": "Melee weapons",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1121": {
+    "Item Name": "Tomahawk",
+    "Loot Category": "Melee weapons",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1122": {
+    "Item Name": "Box of nails",
+    "Loot Category": "Parts",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1123": {
+    "Item Name": "Box of screws",
+    "Loot Category": "Parts",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1124": {
+    "Item Name": "Log",
+    "Loot Category": "Parts",
+    "Rarity": 0,
+    "Weight": 5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1125": {
+    "Item Name": "Nail",
+    "Loot Category": "Parts",
+    "Rarity": 0,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1126": {
+    "Item Name": "Plank",
+    "Loot Category": "Parts",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1127": {
+    "Item Name": "Screw",
+    "Loot Category": "Parts",
+    "Rarity": 0,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1128": {
+    "Item Name": "Grape seeds",
+    "Loot Category": "Seeds",
+    "Rarity": 3,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1129": {
+    "Item Name": "Strawberrie seeds",
+    "Loot Category": "Seeds",
+    "Rarity": 3,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1130": {
+    "Item Name": "Bag of chips",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": null
+  },
+  "1131": {
+    "Item Name": "Canned beans",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1132": {
+    "Item Name": "Canned chicken",
+    "Loot Category": "Stable food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1133": {
+    "Item Name": "Canned corn",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1134": {
+    "Item Name": "Canned milk",
+    "Loot Category": "Stable food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1135": {
+    "Item Name": "Canned peaches",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1136": {
+    "Item Name": "Canned pears",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1137": {
+    "Item Name": "Canned peas",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1138": {
+    "Item Name": "Canned pineapple",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1139": {
+    "Item Name": "Canned salmon",
+    "Loot Category": "Stable food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1140": {
+    "Item Name": "Canned tomatoes",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1141": {
+    "Item Name": "Canned tuna",
+    "Loot Category": "Stable food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1142": {
+    "Item Name": "Chocolate bar",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1143": {
+    "Item Name": "Cookies",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1144": {
+    "Item Name": "Crackers",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1145": {
+    "Item Name": "Dried fruits",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1146": {
+    "Item Name": "Dried pasta",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1147": {
+    "Item Name": "Energy bar",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1148": {
+    "Item Name": "Granola bar",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1149": {
+    "Item Name": "Instant noodles",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1150": {
+    "Item Name": "Meat jerky",
+    "Loot Category": "Stable food",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1151": {
+    "Item Name": "Nutmix",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1152": {
+    "Item Name": "Oatmeal",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1153": {
+    "Item Name": "Pasta sauce",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1154": {
+    "Item Name": "Peanut butter",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1155": {
+    "Item Name": "Popcorn",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1156": {
+    "Item Name": "Protein powder",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1157": {
+    "Item Name": "Rice",
+    "Loot Category": "Stable food",
+    "Rarity": 1,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1158": {
+    "Item Name": "Saw",
+    "Loot Category": "Tools",
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1159": {
+    "Item Name": "Screwdriver",
+    "Loot Category": "Tools",
+    "Rarity": 1,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1160": {
+    "Item Name": "Watering can",
+    "Loot Category": [
+      "Tools",
+      "Containers"
+    ],
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": 5,
+    "Durability": 100
+  },
+  "1161": {
+    "Item Name": "Crowbar",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 3,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 200
+  },
+  "1162": {
+    "Item Name": "Felling axe",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 4,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1163": {
+    "Item Name": "Hammer",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1164": {
+    "Item Name": "Sledgehammer",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 4,
+    "Weight": 4,
+    "Capacity": null,
+    "Durability": 200
+  },
+  "1165": {
+    "Item Name": "Splitting axe",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 3,
+    "Capacity": null,
+    "Durability": 100
+  },
+  "1166": {
+    "Item Name": "Bread knife",
+    "Loot Category": [
+      "Utensils",
+      "Melee weapons"
+    ],
+    "Rarity": 1,
+    "Weight": "0.2",
+    "Capacity": null,
+    "Durability": 30
+  },
+  "1167": {
+    "Item Name": "Butter knife",
+    "Loot Category": [
+      "Utensils",
+      "Melee weapons"
+    ],
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": 30
+  },
+  "1168": {
+    "Item Name": "Fork",
+    "Loot Category": [
+      "Utensils",
+      "Melee weapons"
+    ],
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": 30
+  },
+  "1169": {
+    "Item Name": "Spoon",
+    "Loot Category": [
+      "Utensils",
+      "Melee weapons"
+    ],
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": 1
+  },
+  "1170": {
+    "Item Name": "Steak knife",
+    "Loot Category": [
+      "Utensils",
+      "Melee weapons"
+    ],
+    "Rarity": 1,
+    "Weight": "0.1",
+    "Capacity": null,
+    "Durability": 50
+  },
+  "1171": {
+    "Item Name": "Hatchback",
+    "Loot Category": "Vehicles",
+    "Rarity": 3,
+    "Weight": 0,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1172": {
+    "Item Name": "Sports coupe",
+    "Loot Category": "Vehicles",
+    "Rarity": 4,
+    "Weight": 0,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1173": {
+    "Item Name": "SUV",
+    "Loot Category": "Vehicles",
+    "Rarity": 4,
+    "Weight": 0,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1174": {
+    "Item Name": "Bicycle",
+    "Loot Category": "Vehicles",
+    "Rarity": 3,
+    "Weight": 0,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1175": {
+    "Item Name": "Wrench",
+    "Loot Category": "Tools",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1176": {
+    "Item Name": "Jerrycan with gasoline",
+    "Loot Category": "Containers",
+    "Rarity": 4,
+    "Weight": 10.5,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1177": {
+    "Item Name": "Empty jerrycan",
+    "Loot Category": "Containers",
+    "Rarity": 3,
+    "Weight": 0.5,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1178": {
+    "Item Name": "Maintanance manual \"Hatchback\"",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1179": {
+    "Item Name": "Maintanance manual \"Sports coupe\"",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1180": {
+    "Item Name": "Maintanance manual \"SUV\"",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1181": {
+    "Item Name": "Maintanance manual \"Bicycle\"",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1182": {
+    "Item Name": "Car battery",
+    "Loot Category": "Parts",
+    "Rarity": 2,
+    "Weight": 5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1183": {
+    "Item Name": "Fishing rod",
+    "Loot Category": "Tools",
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1184": {
+    "Item Name": "Fishing tackle",
+    "Loot Category": "Parts",
+    "Rarity": 1,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1185": {
+    "Item Name": "Fishing line",
+    "Loot Category": "Parts",
+    "Rarity": 1,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1186": {
+    "Item Name": "Fishing net",
+    "Loot Category": [
+      "Tools",
+      "Parts"
+    ],
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1187": {
+    "Item Name": "Trout",
+    "Loot Category": "Fresh food",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1188": {
+    "Item Name": "Carp",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1189": {
+    "Item Name": "Catfish",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1190": {
+    "Item Name": "Bass",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1191": {
+    "Item Name": "Shiner",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1192": {
+    "Item Name": "Seabass",
+    "Loot Category": "Fresh food",
+    "Rarity": 1,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1193": {
+    "Item Name": "Flounder",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1194": {
+    "Item Name": "Cod",
+    "Loot Category": "Fresh food",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1195": {
+    "Item Name": "Flashlight",
+    "Loot Category": "Tools",
+    "Rarity": 3,
+    "Weight": 0.3,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1196": {
+    "Item Name": "Battery",
+    "Loot Category": "Parts",
+    "Rarity": 2,
+    "Weight": 0.1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1197": {
+    "Item Name": "Powerbank",
+    "Loot Category": "Tools",
+    "Rarity": 2,
+    "Weight": 0.2,
+    "Capacity": 10,
+    "Durability": null
+  },
+  "1198": {
+    "Item Name": "Powerbank XL",
+    "Loot Category": "Tools",
+    "Rarity": 3,
+    "Weight": 0.4,
+    "Capacity": 20,
+    "Durability": null
+  },
+  "1199": {
+    "Item Name": "Tire pump",
+    "Loot Category": "Tools",
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1200": {
+    "Item Name": "Shovel",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1201": {
+    "Item Name": "Hoe",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1202": {
+    "Item Name": "Ghillie suit",
+    "Loot Category": "Clothing",
+    "Rarity": 3,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1203": {
+    "Item Name": "Improvised ghillie suit",
+    "Loot Category": "Clothing",
+    "Rarity": 0,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1204": {
+    "Item Name": "Meat cleaver",
+    "Loot Category": [
+      "Tools",
+      "Melee weapons"
+    ],
+    "Rarity": 2,
+    "Weight": 1,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1205": {
+    "Item Name": "Bible",
+    "Loot Category": "Literature",
+    "Rarity": 2,
+    "Weight": 0.5,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1206": {
+    "Item Name": "Vitamins",
+    "Loot Category": "Medical",
+    "Rarity": 3,
+    "Weight": 0.2,
+    "Capacity": null,
+    "Durability": null
+  },
+  "1207": {
+    "Item Name": "Hard hat",
+    "Loot Category": "Clothing",
+    "Rarity": 2,
+    "Weight": 0.3,
+    "Capacity": null,
+    "Durability": null
+  }
+}

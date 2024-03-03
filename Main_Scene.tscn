@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://53wf6vfqcarf" path="res://Survivor.tscn" id="5_g10th"]
 
 [node name="Node2D" type="Node2D"]
+visible = false
 script = ExtResource("2_rn8ao")
 
 [node name="Gameplay" type="CanvasLayer" parent="."]

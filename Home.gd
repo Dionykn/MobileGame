@@ -10,7 +10,4 @@ func _process(_delta):
 
 
 func _on_sleep_pressed():
-	var i = 8
-	while i > 0:
-		i -= 1
-		MainScene.hours += 1
+	MainScene.hours += 8

@@ -6,7 +6,6 @@ extends Node2D
 @export var days = 1
 @export var formatted_time = "%02d:" % hours + "%02d" % minutes
 
-
 func _ready():
 	$Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Date.text = "Day 1   06:00"
 	
@@ -39,7 +38,7 @@ func _on_home_pressed():
 	$Gameplay/Home_tscn.visible = true
 	$Gameplay/Survivor_tscn.visible = false
 	$Gameplay/Adventure_tscn.visible = false
-
+	$Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Location.text = "Home"
 # Set Adventure as visible scene
 func _on_adventure_pressed():
 	$Gameplay/Home_tscn.visible = false
@@ -69,3 +68,7 @@ func disable_navbutton():
 	else:
 		$Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Adventure.disabled = false
 
+@onready var label = get_node("Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Location")  # Replace with actual label name
+
+func _on_update_label(text):
+	label.text = text

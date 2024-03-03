@@ -15,6 +15,10 @@ run/main_scene="res://Main_Scene.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+StaticData="*res://Singletons/StaticData.gd"
+
 [display]
 
 window/size/viewport_width=720
