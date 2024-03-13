@@ -6,6 +6,7 @@ extends Node2D
 @export var days = 1
 @export var formatted_time = "%02d:" % hours + "%02d" % minutes
 
+
 func _ready():
 	$Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Date.text = "Day 1   06:00"
 	
@@ -18,8 +19,6 @@ func _on_clock_timeout():
 
 # Runs every frame
 func _process(_delta):
-	# Disable navigation button to current scene
-	disable_navbutton()
 	# Handle time rollovers
 	if minutes >= 60:
 		minutes -= 60
@@ -38,19 +37,28 @@ func _on_home_pressed():
 	$Gameplay/Home_tscn.visible = true
 	$Gameplay/Survivor_tscn.visible = false
 	$Gameplay/Adventure_tscn.visible = false
-	$Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Location.text = "Home"
+	# Set location to Home
+	Adventure.current_location = StaticData.areaData["1"]
+	Adventure.update_location()
+	# Disable navigation button to current scene
+	disable_navbutton()
+
 # Set Adventure as visible scene
 func _on_adventure_pressed():
 	$Gameplay/Home_tscn.visible = false
 	$Gameplay/Survivor_tscn.visible = false
 	$Gameplay/Adventure_tscn.visible = true
-
+	# Disable navigation button to current scene
+	disable_navbutton()
+	
 # Set Survivor as visible scene	
 func _on_survivor_pressed():
 	$Gameplay/Home_tscn.visible = false
 	$Gameplay/Survivor_tscn.visible = true
 	$Gameplay/Adventure_tscn.visible = false
-
+	# Disable navigation button to current scene
+	disable_navbutton()
+	
 # Disable navigation button to current scene
 func disable_navbutton():
 	if $Gameplay/Home_tscn.visible == true:
@@ -68,7 +76,4 @@ func disable_navbutton():
 	else:
 		$Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Adventure.disabled = false
 
-@onready var label = get_node("Statusbar/Control/PanelContainer/MarginContainer/HBoxContainer/Location")  # Replace with actual label name
 
-func _on_update_label(text):
-	label.text = text

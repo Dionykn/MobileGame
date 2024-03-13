@@ -132,6 +132,7 @@ theme_override_constants/separation = 50
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
+disabled = true
 text = "Claim area"
 
 [node name="Loot area" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -158,5 +159,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Go back home"
 
+[connection signal="draw" from="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/Label2" to="." method="_on_loot_amount_label_draw"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Loot area" to="." method="_on_loot_area_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Next area" to="." method="_on_next_area_pressed"]

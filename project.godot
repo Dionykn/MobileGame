@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 StaticData="*res://Singletons/StaticData.gd"
+Adventure="*res://Adventure.tscn"
 
 [display]
 

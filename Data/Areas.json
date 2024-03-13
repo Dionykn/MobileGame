@@ -1,5 +1,14 @@
 {
   "1": {
+	"Area Name": "Home",
+	"Loot Table": null,
+	"Loot Amount": 0,
+	"Zombies Min": 0,
+	"Zombies Max": 0,
+	"Rarity": 0,
+	"Claim Cost": null
+  },
+  "2": {
 	"Area Name": "Open road",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -8,7 +17,7 @@
 	"Rarity": 500,
 	"Claim Cost": null
   },
-  "2": {
+  "3": {
 	"Area Name": "Small house",
 	"Loot Table": [
 	  1007,
@@ -188,7 +197,7 @@
 	"Rarity": 500,
 	"Claim Cost": 8
   },
-  "3": {
+  "4": {
 	"Area Name": "Large house",
 	"Loot Table": [
 	  1007,
@@ -368,7 +377,7 @@
 	"Rarity": 200,
 	"Claim Cost": 12
   },
-  "4": {
+  "5": {
 	"Area Name": "Apartment complex",
 	"Loot Table": [
 	  1007,
@@ -548,7 +557,7 @@
 	"Rarity": 50,
 	"Claim Cost": 16
   },
-  "5": {
+  "6": {
 	"Area Name": "Supermarket",
 	"Loot Table": [
 	  1035,
@@ -645,7 +654,7 @@
 	"Rarity": 50,
 	"Claim Cost": 16
   },
-  "6": {
+  "7": {
 	"Area Name": "Corner store",
 	"Loot Table": [
 	  1007,
@@ -712,7 +721,7 @@
 	"Rarity": 200,
 	"Claim Cost": 8
   },
-  "7": {
+  "8": {
 	"Area Name": "Clothes store",
 	"Loot Table": [
 	  1012,
@@ -735,7 +744,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "8": {
+  "9": {
 	"Area Name": "Sports store",
 	"Loot Table": [
 	  1008,
@@ -767,7 +776,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "9": {
+  "10": {
 	"Area Name": "Hardware store",
 	"Loot Table": [
 	  1022,
@@ -804,7 +813,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "10": {
+  "11": {
 	"Area Name": "Book store",
 	"Loot Table": [
 	  1094,
@@ -833,7 +842,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "11": {
+  "12": {
 	"Area Name": "Library",
 	"Loot Table": [
 	  1094,
@@ -862,7 +871,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "12": {
+  "13": {
 	"Area Name": "School",
 	"Loot Table": [
 	  1012,
@@ -897,7 +906,7 @@
 	"Rarity": 50,
 	"Claim Cost": 12
   },
-  "13": {
+  "14": {
 	"Area Name": "Historical museum",
 	"Loot Table": [
 	  1012,
@@ -912,7 +921,7 @@
 	"Rarity": 5,
 	"Claim Cost": 20
   },
-  "14": {
+  "15": {
 	"Area Name": "Natural museum",
 	"Loot Table": [
 	  1012,
@@ -927,7 +936,7 @@
 	"Rarity": 5,
 	"Claim Cost": 20
   },
-  "15": {
+  "16": {
 	"Area Name": "Arts museum",
 	"Loot Table": [
 	  1012,
@@ -942,7 +951,7 @@
 	"Rarity": 5,
 	"Claim Cost": 20
   },
-  "16": {
+  "17": {
 	"Area Name": "Aquarium",
 	"Loot Table": [
 	  1012,
@@ -957,7 +966,7 @@
 	"Rarity": 5,
 	"Claim Cost": 8
   },
-  "17": {
+  "18": {
 	"Area Name": "Zoo",
 	"Loot Table": [
 	  1012,
@@ -972,7 +981,7 @@
 	"Rarity": 5,
 	"Claim Cost": null
   },
-  "18": {
+  "19": {
 	"Area Name": "Amusement park",
 	"Loot Table": [
 	  1012,
@@ -987,7 +996,7 @@
 	"Rarity": 5,
 	"Claim Cost": null
   },
-  "19": {
+  "20": {
 	"Area Name": "Circus",
 	"Loot Table": [
 	  1012,
@@ -1002,7 +1011,7 @@
 	"Rarity": 15,
 	"Claim Cost": null
   },
-  "20": {
+  "21": {
 	"Area Name": "Police station",
 	"Loot Table": [
 	  1001,
@@ -1066,7 +1075,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "21": {
+  "22": {
 	"Area Name": "Fire station",
 	"Loot Table": [
 	  1008,
@@ -1116,7 +1125,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "22": {
+  "23": {
 	"Area Name": "Hospital",
 	"Loot Table": [
 	  1036,
@@ -1176,7 +1185,7 @@
 	"Rarity": 15,
 	"Claim Cost": 20
   },
-  "23": {
+  "24": {
 	"Area Name": "Health clinic",
 	"Loot Table": [
 	  1036,
@@ -1214,7 +1223,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "24": {
+  "25": {
 	"Area Name": "Car dealer",
 	"Loot Table": [
 	  1008,
@@ -1248,7 +1257,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "25": {
+  "26": {
 	"Area Name": "Bicycle shop",
 	"Loot Table": [
 	  1008,
@@ -1271,7 +1280,7 @@
 	"Rarity": 50,
 	"Claim Cost": null
   },
-  "26": {
+  "27": {
 	"Area Name": "Park",
 	"Loot Table": [
 	  1118,
@@ -1288,7 +1297,23 @@
 	"Rarity": 50,
 	"Claim Cost": null
   },
-  "27": {
+  "28": {
+	"Area Name": "Fishing pond",
+	"Loot Table": [
+	  1028,
+	  1183,
+	  1184,
+	  1185,
+	  1186,
+	  1200
+	],
+	"Loot Amount": 5,
+	"Zombies Min": 1,
+	"Zombies Max": 10,
+	"Rarity": 15,
+	"Claim Cost": null
+  },
+  "29": {
 	"Area Name": "Fenced fishing pond",
 	"Loot Table": [
 	  1028,
@@ -1304,7 +1329,7 @@
 	"Rarity": 5,
 	"Claim Cost": 0
   },
-  "28": {
+  "30": {
 	"Area Name": "Lake",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -1313,7 +1338,7 @@
 	"Rarity": 15,
 	"Claim Cost": null
   },
-  "29": {
+  "31": {
 	"Area Name": "River",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -1322,7 +1347,7 @@
 	"Rarity": 50,
 	"Claim Cost": null
   },
-  "30": {
+  "32": {
 	"Area Name": "Beach",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -1331,7 +1356,7 @@
 	"Rarity": 50,
 	"Claim Cost": null
   },
-  "31": {
+  "33": {
 	"Area Name": "Forest",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -1340,7 +1365,7 @@
 	"Rarity": 200,
 	"Claim Cost": null
   },
-  "32": {
+  "34": {
 	"Area Name": "Open field",
 	"Loot Table": null,
 	"Loot Amount": 0,
@@ -1349,7 +1374,7 @@
 	"Rarity": 200,
 	"Claim Cost": null
   },
-  "33": {
+  "35": {
 	"Area Name": "Factories",
 	"Loot Table": [
 	  1025,
@@ -1376,7 +1401,7 @@
 	"Rarity": 50,
 	"Claim Cost": 12
   },
-  "34": {
+  "36": {
 	"Area Name": "Gas station",
 	"Loot Table": [
 	  1036,
@@ -1430,7 +1455,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "35": {
+  "37": {
 	"Area Name": "Farm",
 	"Loot Table": [
 	  1005,
@@ -1485,7 +1510,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "36": {
+  "38": {
 	"Area Name": "Warehouse",
 	"Loot Table": [
 	  1107,
@@ -1502,7 +1527,7 @@
 	"Rarity": 15,
 	"Claim Cost": 12
   },
-  "37": {
+  "39": {
 	"Area Name": "Large warehouse",
 	"Loot Table": [
 	  1107,
@@ -1519,7 +1544,7 @@
 	"Rarity": 15,
 	"Claim Cost": 16
   },
-  "38": {
+  "40": {
 	"Area Name": "Military base",
 	"Loot Table": [
 	  1001,
@@ -1563,7 +1588,7 @@
 	"Rarity": 1,
 	"Claim Cost": 20
   },
-  "39": {
+  "41": {
 	"Area Name": "Diner",
 	"Loot Table": [
 	  1035,
@@ -1638,7 +1663,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "40": {
+  "42": {
 	"Area Name": "Bar",
 	"Loot Table": [
 	  1035,
@@ -1663,7 +1688,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "41": {
+  "43": {
 	"Area Name": "Butcher",
 	"Loot Table": [
 	  1007,
@@ -1680,7 +1705,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "42": {
+  "44": {
 	"Area Name": "Cemetery",
 	"Loot Table": [
 	  1022,
@@ -1696,7 +1721,7 @@
 	"Rarity": 50,
 	"Claim Cost": null
   },
-  "43": {
+  "45": {
 	"Area Name": "Church",
 	"Loot Table": [
 	  1040,
@@ -1709,7 +1734,7 @@
 	"Rarity": 50,
 	"Claim Cost": 12
   },
-  "44": {
+  "46": {
 	"Area Name": "Pharmacy",
 	"Loot Table": [
 	  1114,
@@ -1724,7 +1749,7 @@
 	"Rarity": 50,
 	"Claim Cost": 8
   },
-  "45": {
+  "47": {
 	"Area Name": "Garage",
 	"Loot Table": [
 	  1008,
@@ -1779,7 +1804,7 @@
 	"Rarity": 200,
 	"Claim Cost": 8
   },
-  "46": {
+  "48": {
 	"Area Name": "Mall",
 	"Loot Table": [
 	  1007,
@@ -1956,7 +1981,7 @@
 	"Rarity": 5,
 	"Claim Cost": 32
   },
-  "47": {
+  "49": {
 	"Area Name": "Construction site",
 	"Loot Table": [
 	  1008,
