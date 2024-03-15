@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://8ud7l8a5unlw"]
+[gd_scene load_steps=4 format=3 uid="uid://8ud7l8a5unlw"]
 
 [ext_resource type="Texture2D" uid="uid://bnc3x2vt28sgq" path="res://bg_Streets.jpg" id="1_i42o7"]
 [ext_resource type="Script" path="res://Adventure.gd" id="1_uatn8"]
+[ext_resource type="PackedScene" uid="uid://d0nqipknfv1vi" path="res://Loot.tscn" id="3_ghiol"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -159,6 +160,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Go back home"
 
+[node name="Loot_tscn" parent="." instance=ExtResource("3_ghiol")]
+visible = false
+layout_mode = 1
+
 [connection signal="draw" from="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/Label2" to="." method="_on_loot_amount_label_draw"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Loot area" to="." method="_on_loot_area_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Next area" to="." method="_on_next_area_pressed"]
+[connection signal="hidden" from="Loot_tscn" to="." method="_on_loot_tscn_hidden"]

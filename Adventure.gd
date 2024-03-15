@@ -8,6 +8,7 @@ extends Control
 @export var zombie_amount = 0
 @export var loot_amount = 0
 @export var adventure_steps = 0
+@export var found_loot = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +38,6 @@ func pick_random_location(areaData):
 
 func pick_random_loot(itemData):
 	var loot_table = current_location["Loot Table"]
-	#loot_amount = current_location["Loot Amount"]
 	
 	# Return empty list if no loot
 	if loot_amount == 0:
@@ -52,24 +52,27 @@ func pick_random_loot(itemData):
 		for item in all_items:
 			if item["ID"] == itemID:  # Check for key and value
 				possible_items.append({
-				"id": itemID,
-				"rarity": item["Rarity"],
+				"ID" : item["ID"],
+				"Item Name" : item["Item Name"],
+				"Loot Category" : item["Loot Category"],
+				"Rarity" : item["Rarity"],
+				"Weight" : item["Weight"],
+				"Capacity" : item["Capacity"],
+				"Durability" : item["Durability"],
 		})
-	print("possible items: ", possible_items)
-		
 	
 	# Pick loot according to rarity
 	var loot = []
 	for i in randi() % (int(loot_amount)+1): # For random amount within range of max amount, use "for i in randi() % (int(loot_amount)+1)"
 		var total_weight = 0
 		for item in possible_items:
-			total_weight += item["rarity"]
+			total_weight += item["Rarity"]
 		var random_pick = randf() * total_weight
 		var accumulated_weight = 0
 		for item in possible_items:
-			accumulated_weight += item["rarity"]
+			accumulated_weight += item["Rarity"]
 			if random_pick < accumulated_weight:
-				loot.append(item["id"])  # Append itemID to loot
+				loot.append(item)  # Append itemID to loot
 				break
 	return loot
 
@@ -93,12 +96,37 @@ func update_location():
 	print("location updated: " + current_location["Area Name"])
 
 func _on_loot_area_pressed():
-	var loot = pick_random_loot(StaticData.itemData)
-	loot_amount = loot_amount - loot.size()
+	found_loot = pick_random_loot(StaticData.itemData)
+	var amount_picked = found_loot.size()
+	loot_amount = loot_amount - amount_picked
 	loot_amountLabel.text = str(loot_amount)
-	print("picked loot: ", loot)
+	for item in found_loot:
+		var button = Button.new()
+		button.text = str(item["Item Name"])  # Set button text to current item
+		get_node("/root/Node2D/Gameplay/Adventure_tscn/Loot_tscn/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GridContainer").add_child(button)
+	
+	if amount_picked != 1:
+		get_node("/root/Node2D/Gameplay/Adventure_tscn/Loot_tscn/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/Label").text = "Your found "+str(amount_picked)+" items"
+	else:
+		get_node("/root/Node2D/Gameplay/Adventure_tscn/Loot_tscn/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/Label").text = "Your found "+str(amount_picked)+" item"
+
+	get_node("/root/Node2D/Gameplay/Adventure_tscn/Loot_tscn").visible = true
+	
+	# Print loot
+	var to_print = ""
+	for item in found_loot:
+		var name = item["Item Name"]
+		to_print = to_print + name + ", "
+	to_print = to_print.substr(0,to_print.length() -1)
+	print("picked loot: ", to_print)
+	
 
 
 func _on_loot_amount_label_draw():
 	if loot_amountLabel.text == "0":
 		$"MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Loot area".disabled = true
+
+
+func _on_loot_tscn_hidden():
+	found_loot = []
+	print(found_loot)
