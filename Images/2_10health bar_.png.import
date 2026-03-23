@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnc3x2vt28sgq"
-path="res://.godot/imported/bg_Streets.jpg-b7d2dff288b23600b32af6d2eab6c274.ctex"
+uid="uid://o7o4toiir87j"
+path="res://.godot/imported/2_10health bar_.png-efe10560cb3d1400bcee7352f206217c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bg_Streets.jpg"
-dest_files=["res://.godot/imported/bg_Streets.jpg-b7d2dff288b23600b32af6d2eab6c274.ctex"]
+source_file="res://Images/2_10health bar_.png"
+dest_files=["res://.godot/imported/2_10health bar_.png-efe10560cb3d1400bcee7352f206217c.ctex"]
 
 [params]
 

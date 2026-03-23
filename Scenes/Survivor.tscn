@@ -1,0 +1,729 @@
+[gd_scene format=3 uid="uid://53wf6vfqcarf"]
+
+[ext_resource type="Script" uid="uid://b3qgij7oujn46" path="res://Scripts/survivor.gd" id="1_6axbj"]
+[ext_resource type="Texture2D" uid="uid://cj2vfruokvj2e" path="res://Images/bg_Survivor.jpg" id="1_imm3m"]
+[ext_resource type="Texture2D" uid="uid://bhe5g21waq6p0" path="res://Images/full_body.png" id="2_um0b0"]
+[ext_resource type="Texture2D" uid="uid://b22c06ygffmri" path="res://Images/10_10health bar_.png" id="4_t78yy"]
+
+[node name="Control" type="Control" unique_id=917679173]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6axbj")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1992400763]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_imm3m")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1344634658]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 114
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 242
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=956057992]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/PanelContainer" unique_id=619461196]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer" unique_id=420705583]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="BodyConditionToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=112699786]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+button_pressed = true
+text = "Body Condition"
+alignment = 1
+
+[node name="BodyConditionContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=471485727]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext" unique_id=1939110654]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer" unique_id=736552074]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_um0b0")
+expand_mode = 4
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer" unique_id=185927369]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=1693864528]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=739890511]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Head"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=789844490]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=1767202456]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=637210057]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Torso"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=905433000]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=740987770]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1342476539]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Left Arm"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer3" unique_id=19815135]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=445432151]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer4" unique_id=1547399465]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Left Hand"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer4" unique_id=461163852]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=1148038559]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1230776821]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Left Leg"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=2031842854]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=785597696]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=461107360]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Right Arm"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=932074043]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=1062818913]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer7" unique_id=872615191]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Right Hand"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer7" unique_id=1819426943]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer" unique_id=2019316150]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer8" unique_id=281725264]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Right Leg"
+horizontal_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/VBoxContainer/HBoxContainer8" unique_id=250311416]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Healthy"
+
+[node name="VitalSignsToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=846335626]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+button_pressed = true
+text = "Vital Signs"
+alignment = 1
+
+[node name="VitalSignsContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=732753065]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext" unique_id=1307860155]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Health" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=880633767]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Health" unique_id=1044436394]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Health"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Health" unique_id=2118231629]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Hydration" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=1104342561]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Hydration" unique_id=1085457298]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Hydration"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Hydration" unique_id=143990466]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Nourishment" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=293732399]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Nourishment" unique_id=1291046515]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Nourishment"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Nourishment" unique_id=1733874362]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Stamina" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=1174862851]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Stamina" unique_id=890655906]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Stamina"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Stamina" unique_id=761555274]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Endurance" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=709100513]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Endurance" unique_id=707037035]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Endurance"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Endurance" unique_id=555481269]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Happiness" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=534141920]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1098834314]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Happiness"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1225105448]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_t78yy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="EquipmentToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1412841019]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+button_pressed = true
+text = "Equipment"
+alignment = 1
+
+[node name="EquipmentContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1641674963]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext" unique_id=1260482420]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=414361486]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer9" unique_id=1299357626]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "LEFT HAND"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer9" unique_id=835227224]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=548921206]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer10" unique_id=1762499079]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "RIGHT HAND"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer10" unique_id=1863600694]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=709076022]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer" unique_id=2141657595]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "HAT"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer" unique_id=1655831810]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=119522530]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer2" unique_id=1035959105]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "TOP"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer2" unique_id=1949394769]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=1885689452]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer3" unique_id=357354374]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "PANTS"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer3" unique_id=1955712126]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=403012642]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer4" unique_id=514110358]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "SHOES"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer4" unique_id=2027656002]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=2105126104]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer5" unique_id=1663304374]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "GLOVES"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer5" unique_id=1230048141]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=161834168]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer6" unique_id=381911654]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "BACKPACK"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer6" unique_id=723932695]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=1471704263]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer7" unique_id=1901609790]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "SLING"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer7" unique_id=135950848]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer" unique_id=2002129955]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer8" unique_id=1407654988]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+text = "WAIST"
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentContext/GridContainer/HBoxContainer8" unique_id=1321784478]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "None"
+horizontal_alignment = 1
+
+[node name="InventoryToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1716238004]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+button_pressed = true
+text = "Inventory"
+alignment = 1
+
+[node name="InventoryContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=2145546704]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/InventoryContext" unique_id=1940737055]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="SkillsToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=24728313]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+button_pressed = true
+text = "Skills"
+alignment = 1
+
+[node name="SkillsContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=912281433]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext" unique_id=478990222]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="BluntWeapons" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=760524343]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/BluntWeapons" unique_id=1017887701]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Blunt Weapons"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/BluntWeapons" unique_id=1208944427]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="SharpWeapons" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=140124160]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/SharpWeapons" unique_id=414880256]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Sharp Weapons"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/SharpWeapons" unique_id=1242679220]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="WeaponAiming" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=593844335]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/WeaponAiming" unique_id=889112163]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Weapon Aiming"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/WeaponAiming" unique_id=1755320173]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="WeaponReloading" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=200617132]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/WeaponReloading" unique_id=980251428]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Weapon Reloading"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/WeaponReloading" unique_id=1817410294]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sneaking" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=210239097]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Sneaking" unique_id=2107436999]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Sneaking"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Sneaking" unique_id=2131249068]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="Crafting" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=1190694599]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Crafting" unique_id=876817652]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Crafting"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Crafting" unique_id=461733201]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="Cooking" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=201351988]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Cooking" unique_id=2028739012]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Cooking"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Cooking" unique_id=188634519]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="Foraging" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer" unique_id=8339219]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Foraging" unique_id=1147801740]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Foraging"
+horizontal_alignment = 2
+
+[node name="LevelIndicator" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsContext/VBoxContainer/Foraging" unique_id=1148043419]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="toggled" from="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionToggle" to="." method="_on_body_condition_toggled"]
+[connection signal="toggled" from="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsToggle" to="." method="_on_vital_signs_toggled"]
+[connection signal="toggled" from="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/EquipmentToggle" to="." method="_on_equipment_toggled"]
+[connection signal="toggled" from="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/InventoryToggle" to="." method="_on_inventory_toggled"]
+[connection signal="toggled" from="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/SkillsToggle" to="." method="_on_skills_toggled"]

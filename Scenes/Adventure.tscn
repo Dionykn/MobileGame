@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://8ud7l8a5unlw"]
+
+[ext_resource type="Texture2D" uid="uid://bnc3x2vt28sgq" path="res://Images/bg_Streets.jpg" id="1_i42o7"]
+[ext_resource type="Script" uid="uid://djcrabvhu8tw5" path="res://Scripts/Adventure.gd" id="1_uatn8"]
+[ext_resource type="PackedScene" uid="uid://d0nqipknfv1vi" path="res://Scenes/Loot.tscn" id="3_ghiol"]
+
+[node name="Control" type="Control" unique_id=1687271943]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uatn8")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=843438603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_i42o7")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=733473728]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 114
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 242
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1118828788]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=936942303]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer2" unique_id=255229383]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer" unique_id=230914532]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=1808581791]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1248023946]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Distance traveled: "
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1473628411]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "<steps*100>"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=372555763]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1426369357]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Zombies nearby: "
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1398068213]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "<zombie count>"
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=2008264454]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1219442978]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Loot nearby: "
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=177695061]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "<loot count>"
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1654186464]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=306357070]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1078513526]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="ClaimArea" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1012965776]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+disabled = true
+text = "Claim area"
+
+[node name="LootArea" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1444756415]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Search for loot"
+
+[node name="AttackZombies" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=408703600]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Attack zombies"
+
+[node name="NextArea" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=829136074]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Move to next area"
+
+[node name="GoHome" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2065970584]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Go back home"
+
+[node name="Loot_tscn" parent="." unique_id=2088840580 instance=ExtResource("3_ghiol")]
+visible = false
+layout_mode = 1
+
+[connection signal="draw" from="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/Label2" to="." method="_on_loot_amount_label_draw"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ClaimArea" to="." method="_on_claim_area_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/LootArea" to="." method="_on_loot_area_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/AttackZombies" to="." method="_on_attack_zombies_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/NextArea" to="." method="_on_next_area_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/GoHome" to="." method="_on_go_home_pressed"]

@@ -8,17 +8,21 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Mobile Game"
-run/main_scene="res://Main_Scene.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+run/main_scene="res://Scenes/Main_Scene.tscn"
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 StaticData="*res://Singletons/StaticData.gd"
-Adventure="*res://Adventure.tscn"
+PlayerData="*uid://bbc8d5i3b5mtr"
 
 [display]
 

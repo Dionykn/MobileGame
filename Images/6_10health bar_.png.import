@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj2vfruokvj2e"
-path="res://.godot/imported/bg_Survivor.jpg-c1edb4e8aba35963cad89235d4abe5fa.ctex"
+uid="uid://i3uqdi7xx7lb"
+path="res://.godot/imported/6_10health bar_.png-3c8cc7a3a0598b803d9cd66635f3f342.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bg_Survivor.jpg"
-dest_files=["res://.godot/imported/bg_Survivor.jpg-c1edb4e8aba35963cad89235d4abe5fa.ctex"]
+source_file="res://Images/6_10health bar_.png"
+dest_files=["res://.godot/imported/6_10health bar_.png-3c8cc7a3a0598b803d9cd66635f3f342.ctex"]
 
 [params]
 

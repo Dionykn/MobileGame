@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://d17pysnt8wjns"]
+
+[ext_resource type="Texture2D" uid="uid://clkk7l8oyrdan" path="res://Images/bg_Home.png" id="1_7ubk4"]
+[ext_resource type="Script" uid="uid://bf8wk3drrylem" path="res://Scripts/Home.gd" id="1_mkqro"]
+
+[node name="Control" type="Control" unique_id=804503367]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mkqro")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1298240605]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7ubk4")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=314642594]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 114
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 242
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=713160707]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=88644085]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1164572349]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="WatchTV" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1072045037]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Watch TV"
+
+[node name="PrepareFood" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1818299397]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Prepare food"
+
+[node name="Read" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=557371369]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Read literature"
+
+[node name="Generator" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1684110222]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Manage generator"
+
+[node name="Sleep" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2103569505]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Go to sleep"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/WatchTV" to="." method="_on_watch_tv_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PrepareFood" to="." method="_on_prepare_food_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Read" to="." method="_on_read_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Generator" to="." method="_on_generator_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Sleep" to="." method="_on_sleep_pressed"]
