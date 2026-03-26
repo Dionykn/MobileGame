@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://pwrpcjgqx4e2" path="res://Scripts/Loot.gd" id="1_cuh0d"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stjln"]
+bg_color = Color(0, 0, 0, 0.90000004)
+
 [node name="Control" type="Control" unique_id=1623514550]
 layout_mode = 3
 anchors_preset = 15
@@ -11,21 +14,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cuh0d")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1244334797]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1251696909]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1840827455]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -220.0
-offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
@@ -37,6 +39,7 @@ theme_override_constants/margin_bottom = 500
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_stjln")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=2047785373]
 layout_mode = 2
@@ -69,13 +72,13 @@ layout_mode = 2
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer" unique_id=701046242]
 layout_direction = 2
 layout_mode = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 5
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
 
 [node name="Item" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GridContainer" unique_id=699625446]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+text = "testingtesting"
 
 [node name="Item2" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GridContainer" unique_id=1659091118]
 custom_minimum_size = Vector2(64, 64)
@@ -95,6 +98,8 @@ layout_mode = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=221376975]
 layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer3" unique_id=1803746930]

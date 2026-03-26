@@ -38,11 +38,10 @@ func show_loot(items: Array) -> void:
 	# Create one button per item — button text is the item name
 	for item in items:
 		var btn := Button.new()
-		btn.text = item["Item Name"]
+		btn.text = "   " + item["Item Name"] + "   "
 		btn.custom_minimum_size = Vector2(64, 64)
-		grid_container.add_child(btn)
 		# Individual item selection can be wired here in the future
-
+		grid_container.add_child(btn)
 
 # ==============================================================================
 # Button handlers (wired in the editor)
