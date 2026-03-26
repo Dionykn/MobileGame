@@ -164,7 +164,6 @@ text = "Go back home"
 visible = false
 layout_mode = 1
 
-[connection signal="draw" from="MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/Label2" to="." method="_on_loot_amount_label_draw"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ClaimArea" to="." method="_on_claim_area_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/LootArea" to="." method="_on_loot_area_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/AttackZombies" to="." method="_on_attack_zombies_pressed"]

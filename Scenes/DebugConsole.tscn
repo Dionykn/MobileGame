@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cnkpgkp5363mg"]
+
+[ext_resource type="Script" uid="uid://drfategxgodjr" path="res://Scripts/DebugConsole.gd" id="1_debug"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cc3mf"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="DebugConsole" type="Control" unique_id=338101259]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.3
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_debug")
+
+[node name="Panel" type="Panel" parent="." unique_id=1118624284]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cc3mf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1617820773]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=594608764]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=1418724927]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HistoryLabel" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer" unique_id=224382316]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.576, 0.576, 0.576, 1)
+theme_override_font_sizes/font_size = 14
+text = "Debug Console ready. Type 'help' for commands."
+autowrap_mode = 3
+
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer" unique_id=787757791]
+layout_mode = 2
+placeholder_text = "Enter command... (Type \"help\" for available commands)"
+
+[connection signal="gui_input" from="Panel/VBoxContainer/LineEdit" to="." method="_on_line_edit_gui_input"]
+[connection signal="text_submitted" from="Panel/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

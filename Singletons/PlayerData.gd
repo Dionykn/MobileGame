@@ -20,6 +20,19 @@ extends Node
 # ------------------------------------------------------------------------------
 signal stats_changed
 
+# ------------------------------------------------------------------------------
+# Inventory signals — emitted by add/remove so the UI updates surgically
+# instead of rebuilding the whole grid on every stats_changed.
+#   item_added   — a brand-new stack appeared during gameplay
+#   item_updated — an existing stack's count changed
+#   item_removed — a stack was reduced to 0 and erased
+# ------------------------------------------------------------------------------
+signal item_added(item: Dictionary)
+signal item_updated(item_id: int, new_count: int)
+signal item_removed(item_id: int)
+
+const SAVE_PATH := "user://savegame.json"
+var new_game: bool = true
 
 # --- World / time state -------------------------------------------------------
 var days:    int = 1
@@ -31,54 +44,24 @@ var current_location: Dictionary = {}
 var adventure_steps:  int = 0
 
 # --- Vital stats --------------------------------------------------------------
-# Each stat is a float so gradual changes are smooth.
-# Ranges are noted in comments; enforce them through the setters below.
+var health:      float = 100.0
+var hydration:   float = 100.0
+var nourishment: float = 100.0
+var stamina:     float = 100.0
+var endurance:   float = 100.0
+var happiness:   float = 100.0
 
-var health:      float = 100.0  # 0–100. Reaches 0 = death.
-var hydration:   float = 100.0  # 0–100. Low = reduced carry capacity, then death.
-var nourishment: float = 100.0  # 0–100. Low = reduced strength and healing.
-var stamina:     float = 100.0  # 0–100. Low = reduced speed and combat.
-var happiness:   float = 100.0  # 0–100. Low = slower action speed.
+# --- Status values (NOT YET IMPLEMENTED) --------------------------------------
+#var pain:         float = 0.0
+#var intoxication: float = 0.0
+#var temperature:  float = 5.0
+#var wetness:      float = 0.0
+#var sickness:     float = 0.0
 
-# --- Status values ------------------------------------------------------------
-var pain:         float = 0.0   # 0–5.   High = reduced speed. Blocks sleep above minor pain.
-var intoxication: float = 0.0   # 0–10.  High = spotted more easily, reduced combat.
-var temperature:  float = 5.0   # 0–10.  Target is 5 (≈37 °C). Too high or too low causes effects.
-var wetness:      float = 0.0   # 0–5.   Lowers temperature and reduces clothing insulation.
-var sickness:     float = 0.0   # 0–5.   Raises temperature, reduces strength, drains health.
-
-# --- Skills -------------------------------------------------------------------
-# Each skill is a level integer starting at 0.
-var skills: Dictionary = {
-	"Fitness":      0,
-	"Strength":     0,
-	"Sprinting":    0,
-	"Light-footed": 0,
-	"Nimble":       0,
-	"Sneaking":     0,
-	"Axe":          0,
-	"L.Blunt":      0,
-	"S.Blunt":      0,
-	"L.Blade":      0,
-	"S.Blade":      0,
-	"Maintenance":  0,
-	"Carpentry":    0,
-	"Cooking":      0,
-	"Farming":      0,
-	"First Aid":    0,
-	"Electrical":   0,
-	"Metalworking": 0,
-	"Mechanics":    0,
-	"Tailoring":    0,
-	"Aiming":       0,
-	"Reloading":    0,
-	"Fishing":      0,
-	"Foraging":     0,
-	"Trapping":     0,
-}
+# --- Skills (NOT YET IMPLEMENTED) ---------------------------------------------
+#var skills: Dictionary = { ... }
 
 # --- Equipment ----------------------------------------------------------------
-# Each slot holds either null (empty) or an item Dictionary from StaticData.
 var equipment: Dictionary = {
 	"hat":      null,
 	"top":      null,
@@ -91,28 +74,127 @@ var equipment: Dictionary = {
 }
 
 # --- Inventory ----------------------------------------------------------------
-# A flat Array of item Dictionaries. No fixed size yet — carry capacity will
-# be enforced here once the weight system is implemented.
-var inventory: Array = []
+# Keyed by item ID (int). Each entry holds the item dict and a stack count.
+# Example: { 1001: { "item": {...}, "count": 3 } }
+# Always use add_to_inventory / remove_from_inventory — never write directly.
+var inventory: Dictionary = {}
 
 # --- Body condition -----------------------------------------------------------
-# Each body part holds a status string. Expanded when wound system is added.
 var body_condition: Dictionary = {
-	"head":      "Healthy",
-	"abdomen":   "Healthy",
-	"left_arm":  "Healthy",
-	"right_arm": "Healthy",
-	"left_leg":  "Healthy",
-	"right_leg": "Healthy",
+	"head":       "Healthy",
+	"abdomen":    "Healthy",
+	"left_arm":   "Healthy",
+	"left_hand":  "Healthy",
+	"left_leg":   "Healthy",
+	"right_arm":  "Healthy",
+	"right_hand": "Healthy",
+	"right_leg":  "Healthy",
 }
+
+
+# ==============================================================================
+# Lifecycle
+# ==============================================================================
+
+func _ready() -> void:
+	stats_changed.connect(save_game)
+	load_game()
+
+
+# ==============================================================================
+# Save / Load
+# ==============================================================================
+
+func save_game() -> void:
+	# JSON only supports string keys — convert int inventory keys to strings.
+	var inventory_serialized: Dictionary = {}
+	for id in inventory:
+		inventory_serialized[str(id)] = inventory[id]
+
+	var data := {
+		"days":             days,
+		"hours":            hours,
+		"minutes":          minutes,
+		"adventure_steps":  adventure_steps,
+		"current_location": current_location,
+		"health":           health,
+		"hydration":        hydration,
+		"nourishment":      nourishment,
+		"stamina":          stamina,
+		"endurance":        endurance,
+		"happiness":        happiness,
+		"equipment":        equipment,
+		"inventory":        inventory_serialized,
+		"body_condition":   body_condition,
+	}
+
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file == null:
+		push_error("PlayerData: could not open save file for writing — %s" % SAVE_PATH)
+		return
+	file.store_string(JSON.stringify(data, "\t"))
+	file.close()
+
+
+func load_game() -> void:
+	if not FileAccess.file_exists(SAVE_PATH):
+		return  # No save file yet — keep defaults.
+
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if file == null:
+		push_error("PlayerData: could not open save file for reading — %s" % SAVE_PATH)
+		return
+
+	var parsed = JSON.parse_string(file.get_as_text())
+	file.close()
+	new_game = false
+
+	if parsed == null or not parsed is Dictionary:
+		push_error("PlayerData: save file is corrupt or unreadable.")
+		return
+
+	# --- Time & world ---------------------------------------------------------
+	days             = int(parsed.get("days",             days))
+	hours            = int(parsed.get("hours",            hours))
+	minutes          = int(parsed.get("minutes",          minutes))
+	adventure_steps  = int(parsed.get("adventure_steps",  adventure_steps))
+	current_location = parsed.get("current_location",     current_location)
+
+	# --- Vital stats ----------------------------------------------------------
+	health      = float(parsed.get("health",      health))
+	hydration   = float(parsed.get("hydration",   hydration))
+	nourishment = float(parsed.get("nourishment", nourishment))
+	stamina     = float(parsed.get("stamina",     stamina))
+	endurance   = float(parsed.get("endurance",   endurance))
+	happiness   = float(parsed.get("happiness",   happiness))
+
+	# --- Equipment ------------------------------------------------------------
+	var saved_equipment: Dictionary = parsed.get("equipment", {})
+	for slot in saved_equipment:
+		if equipment.has(slot):
+			equipment[slot] = saved_equipment[slot]
+
+	# --- Body condition -------------------------------------------------------
+	var saved_body: Dictionary = parsed.get("body_condition", {})
+	for part in saved_body:
+		if body_condition.has(part):
+			body_condition[part] = saved_body[part]
+
+	# --- Inventory ------------------------------------------------------------
+	# JSON stringifies int keys — convert back to int on load.
+	# No signals emitted here; Survivor._ready() reads PlayerData.inventory
+	# directly via _rebuild_inventory_grid() once its signals are connected.
+	var saved_inventory: Dictionary = parsed.get("inventory", {})
+	for key in saved_inventory:
+		inventory[int(key)] = saved_inventory[key]
+
+	notify_stats_changed()
 
 
 # ==============================================================================
 # Time helpers
 # ==============================================================================
 
-# Advances time by the given hours and minutes, handling carry correctly.
-# Always use this instead of writing to hours/minutes directly.
 func add_time(h: int, m: int) -> void:
 	minutes += m
 	if minutes >= 60:
@@ -129,12 +211,10 @@ func add_time(h: int, m: int) -> void:
 # Stat helpers
 # ==============================================================================
 
-# Call this after changing any stat to notify the UI.
 func notify_stats_changed() -> void:
 	stats_changed.emit()
 
 
-# Clamps a value between 0 and a given maximum.
 func _clamp_stat(value: float, max_value: float) -> float:
 	return clamp(value, 0.0, max_value)
 
@@ -143,28 +223,34 @@ func _clamp_stat(value: float, max_value: float) -> float:
 # Inventory helpers
 # ==============================================================================
 
-# Adds an item dictionary to the inventory and notifies the UI.
 func add_to_inventory(item: Dictionary) -> void:
-	inventory.append(item)
+	var id: int = item["ID"]
+	if inventory.has(id):
+		inventory[id]["count"] += 1
+		item_updated.emit(id, inventory[id]["count"])
+	else:
+		inventory[id] = { "item": item, "count": 1 }
+		item_added.emit(item)
 	notify_stats_changed()
 
 
-# Removes the first occurrence of an item with the given ID from inventory.
-# Returns true if removed, false if not found.
 func remove_from_inventory(item_id: int) -> bool:
-	for i in inventory.size():
-		if inventory[i].get("ID") == item_id:
-			inventory.remove_at(i)
-			notify_stats_changed()
-			return true
-	return false
+	if not inventory.has(item_id):
+		return false
+	inventory[item_id]["count"] -= 1
+	if inventory[item_id]["count"] <= 0:
+		inventory.erase(item_id)
+		item_removed.emit(item_id)
+	else:
+		item_updated.emit(item_id, inventory[item_id]["count"])
+	notify_stats_changed()
+	return true
 
 
 # ==============================================================================
 # Equipment helpers
 # ==============================================================================
 
-# Equips an item to the given slot. Slot names match the equipment Dictionary keys.
 func set_equipment(slot: String, item: Dictionary) -> void:
 	if equipment.has(slot):
 		equipment[slot] = item
@@ -173,7 +259,6 @@ func set_equipment(slot: String, item: Dictionary) -> void:
 		push_warning("PlayerData: unknown equipment slot '%s'" % slot)
 
 
-# Clears a slot (unequips).
 func clear_equipment(slot: String) -> void:
 	if equipment.has(slot):
 		equipment[slot] = null

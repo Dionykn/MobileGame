@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cqgbqi36h80in" path="res://Scripts/MainScene.gd" id="2_rn8ao"]
 [ext_resource type="PackedScene" uid="uid://d17pysnt8wjns" path="res://Scenes/Home.tscn" id="3_5e14e"]
 [ext_resource type="PackedScene" uid="uid://8ud7l8a5unlw" path="res://Scenes/Adventure.tscn" id="4_bg615"]
+[ext_resource type="PackedScene" uid="uid://cnkpgkp5363mg" path="res://Scenes/DebugConsole.tscn" id="5_6bry8"]
 [ext_resource type="PackedScene" uid="uid://53wf6vfqcarf" path="res://Scenes/Survivor.tscn" id="5_g10th"]
 
 [node name="Node2D" type="Node2D" unique_id=667357370]
@@ -110,6 +111,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "Survivor"
+
+[node name="DebugConsole" type="CanvasLayer" parent="." unique_id=1627716260]
+
+[node name="DebugConsole_tscn" parent="DebugConsole" unique_id=492191549 instance=ExtResource("5_6bry8")]
 
 [connection signal="timeout" from="Statusbar/Control/Clock" to="." method="_on_clock_timeout"]
 [connection signal="pressed" from="Navigationbar/Control/PanelContainer/MarginContainer/HBoxContainer/Home" to="." method="_on_home_pressed"]

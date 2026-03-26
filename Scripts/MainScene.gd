@@ -25,9 +25,13 @@ extends Node2D
 
 func _ready() -> void:
 	PlayerData.stats_changed.connect(_update_status_bar)
-	# Initialise location to Home before showing the first scene
-	PlayerData.current_location = StaticData.areaData["1"]
-	_show_scene(home_scene)
+	if PlayerData.new_game:	
+		# Initialise location to Home before showing the first scene
+		PlayerData.current_location = StaticData.areaData["1"]
+		_show_scene(home_scene)
+	else:
+		_show_scene(adventure_scene)
+		PlayerData.notify_stats_changed()
 	_update_status_bar()
 
 

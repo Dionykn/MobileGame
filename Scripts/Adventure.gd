@@ -22,8 +22,7 @@ var loot_amount: int = 0
 
 
 func _ready() -> void:
-	set_location_to_home()
-
+	_update_location_display()
 
 # ==============================================================================
 # Location helpers

@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://53wf6vfqcarf"]
 
-[ext_resource type="Script" uid="uid://b3qgij7oujn46" path="res://Scripts/survivor.gd" id="1_6axbj"]
+[ext_resource type="Script" uid="uid://b3qgij7oujn46" path="res://Scripts/Survivor.gd" id="1_6axbj"]
 [ext_resource type="Texture2D" uid="uid://cj2vfruokvj2e" path="res://Images/bg_Survivor.jpg" id="1_imm3m"]
 [ext_resource type="Texture2D" uid="uid://bhe5g21waq6p0" path="res://Images/full_body.png" id="2_um0b0"]
-[ext_resource type="Texture2D" uid="uid://b22c06ygffmri" path="res://Images/10_10health bar_.png" id="4_t78yy"]
+[ext_resource type="Texture2D" uid="uid://dkulgnn6b6fpf" path="res://Images/0_10health bar_.png" id="5_frkco"]
+[ext_resource type="Texture2D" uid="uid://u3kfl67p4bp1" path="res://Images/white_health bar_.png" id="6_qu7m3"]
 
 [node name="Control" type="Control" unique_id=917679173]
 layout_mode = 3
@@ -46,7 +47,6 @@ horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer" unique_id=420705583]
-clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -259,16 +259,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Health" unique_id=1044436394]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Health"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Health" unique_id=2118231629]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Health" unique_id=1217303522]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="Hydration" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=1104342561]
 layout_mode = 2
@@ -276,16 +281,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Hydration" unique_id=1085457298]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Hydration"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Hydration" unique_id=143990466]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Hydration" unique_id=2126451116]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="Nourishment" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=293732399]
 layout_mode = 2
@@ -293,16 +303,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Nourishment" unique_id=1291046515]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Nourishment"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Nourishment" unique_id=1733874362]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Nourishment" unique_id=221197665]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="Stamina" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=1174862851]
 layout_mode = 2
@@ -310,16 +325,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Stamina" unique_id=890655906]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Stamina"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Stamina" unique_id=761555274]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Stamina" unique_id=1982573974]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="Endurance" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=709100513]
 layout_mode = 2
@@ -327,16 +347,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Endurance" unique_id=707037035]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Endurance"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Endurance" unique_id=555481269]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Endurance" unique_id=336902247]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="Happiness" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=534141920]
 layout_mode = 2
@@ -344,16 +369,21 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1098834314]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 theme_override_font_sizes/font_size = 24
 text = "Happiness"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1225105448]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1763915546]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_t78yy")
-expand_mode = 3
-stretch_mode = 4
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
 
 [node name="EquipmentToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1412841019]
 layout_mode = 2
@@ -562,12 +592,12 @@ theme_override_constants/margin_bottom = 40
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/InventoryContext" unique_id=1940737055]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
 columns = 4
 
 [node name="SkillsToggle" type="CheckButton" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=24728313]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 button_pressed = true
@@ -575,6 +605,7 @@ text = "Skills"
 alignment = 1
 
 [node name="SkillsContext" type="MarginContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=912281433]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
