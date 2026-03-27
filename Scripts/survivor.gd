@@ -46,6 +46,15 @@ const HEALTH_THRESHOLDS = {
 
 
 func _ready() -> void:
+	# --- Status bar scaling -----------------------------------------------------------
+	const BAR_RATIO := 100.0 / 1000.0  # native_height / native_width — adjust to your texture
+	for bar in [bar_health, bar_hydration, bar_nourishment,
+				bar_stamina, bar_endurance, bar_happiness]:
+		bar.resized.connect(func():
+			bar.custom_minimum_size.y = bar.size.x * BAR_RATIO
+		)
+	
+	inventory_grid.size_flags_horizontal = Control.SIZE_FILL
 	inventory_grid.size_flags_horizontal = Control.SIZE_FILL
 	inventory_grid.resized.connect(_update_grid_columns)
 	PlayerData.stats_changed.connect(_refresh_ui)
@@ -53,9 +62,8 @@ func _ready() -> void:
 	PlayerData.item_updated.connect(_on_item_updated)
 	PlayerData.item_removed.connect(_on_item_removed)
 	_refresh_ui()
-	# Populate inventory grid from whatever PlayerData already holds.
-	# This covers the load-from-save case where item_added fired before
-	# this scene existed and connected its signals.
+	
+	# Populate inventory grid with whatever items PlayerData already holds.
 	_rebuild_inventory_grid()
 
 
