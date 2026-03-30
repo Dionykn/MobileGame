@@ -2,9 +2,16 @@
 
 [ext_resource type="Script" uid="uid://b3qgij7oujn46" path="res://Scripts/Survivor.gd" id="1_6axbj"]
 [ext_resource type="Texture2D" uid="uid://cj2vfruokvj2e" path="res://Images/bg_Survivor.jpg" id="1_imm3m"]
-[ext_resource type="Texture2D" uid="uid://bhe5g21waq6p0" path="res://Images/full_body.png" id="2_um0b0"]
+[ext_resource type="Texture2D" uid="uid://def0j2jhnabcg" path="res://Images/Healed/Head.png" id="4_ilecy"]
+[ext_resource type="Texture2D" uid="uid://c8iao7x2wxh7g" path="res://Images/Healed/Abdomen.png" id="5_c0nrm"]
 [ext_resource type="Texture2D" uid="uid://dkulgnn6b6fpf" path="res://Images/0_10health bar_.png" id="5_frkco"]
+[ext_resource type="Texture2D" uid="uid://c4dwk03yfusny" path="res://Images/Healed/Left arm.png" id="6_cox54"]
 [ext_resource type="Texture2D" uid="uid://u3kfl67p4bp1" path="res://Images/white_health bar_.png" id="6_qu7m3"]
+[ext_resource type="Texture2D" uid="uid://csocwdos8tmks" path="res://Images/Healed/Left hand.png" id="7_iu71m"]
+[ext_resource type="Texture2D" uid="uid://cibpl7ufejc2e" path="res://Images/Healed/Left leg.png" id="8_0mtvq"]
+[ext_resource type="Texture2D" uid="uid://yi7h2bq711il" path="res://Images/Healed/Right arm.png" id="9_wif0g"]
+[ext_resource type="Texture2D" uid="uid://4efh2ueypgef" path="res://Images/Healed/Right hand.png" id="10_gbelu"]
+[ext_resource type="Texture2D" uid="uid://cml6xoy3htbyt" path="res://Images/Healed/Right leg.png" id="11_jsmmd"]
 
 [node name="Control" type="Control" unique_id=917679173]
 layout_mode = 3
@@ -71,12 +78,105 @@ custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer" unique_id=736552074]
+[node name="BodyTextures" type="Control" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer" unique_id=230506667]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("2_um0b0")
+
+[node name="Head" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=107746435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_ilecy")
 expand_mode = 4
-stretch_mode = 6
+stretch_mode = 5
+
+[node name="Torso" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=1289149367]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_c0nrm")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="LeftArm" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=2030102361]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_cox54")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="LeftHand" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=2000002414]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("7_iu71m")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="LeftLeg" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=2095291223]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_0mtvq")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="RightArm" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=1909054452]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("9_wif0g")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="RightHand" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=1732516318]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("10_gbelu")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="RightLeg" type="TextureRect" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer/BodyTextures" unique_id=546539458]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("11_jsmmd")
+expand_mode = 4
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/BodyConditionContext/HBoxContainer" unique_id=185927369]
 layout_mode = 2
