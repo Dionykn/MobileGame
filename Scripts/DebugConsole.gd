@@ -17,6 +17,15 @@ var input_history:   Array[String] = []
 var history_index:   int  = -1
 var is_visible:      bool = false
 
+# Valid body part keys accepted by the "body" command.
+const BODY_PARTS: Array = [
+	"head", "abdomen", "left_arm", "left_hand", "left_leg",
+	"right_arm", "right_hand", "right_leg"
+]
+
+# Valid condition strings accepted by the "body" command.
+const BODY_CONDITIONS: Array = ["Healthy", "Hurt", "Healed", "Bleeding"]
+
 
 func _ready() -> void:
 	hide()
@@ -82,14 +91,12 @@ func _on_line_edit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_UP:
-				# Walk backwards through input history.
 				if history_index < input_history.size() - 1:
 					history_index += 1
 					line_edit.text = input_history[input_history.size() - 1 - history_index]
 					line_edit.caret_column = line_edit.text.length()
 					accept_event()
 			KEY_DOWN:
-				# Walk forwards (towards most recent).
 				if history_index > 0:
 					history_index -= 1
 					line_edit.text = input_history[input_history.size() - 1 - history_index]
@@ -177,6 +184,20 @@ func _process_command(command: String) -> void:
 			else:
 				_add_to_display("Usage: loc [id]  OR  loc list")
 
+		"body":
+			# body [part] [condition]  OR  body list  OR  body all [condition]
+			if parts.size() >= 2:
+				if parts[1] == "list":
+					_list_body_condition()
+				elif parts[1] == "all" and parts.size() >= 3:
+					_set_all_body_condition(parts[2])
+				elif parts.size() >= 3:
+					_set_body_condition(parts[1], parts[2])
+				else:
+					_add_to_display("Usage: body [part] [condition]  OR  body all [condition]  OR  body list")
+			else:
+				_add_to_display("Usage: body [part] [condition]  OR  body all [condition]  OR  body list")
+
 		"reset":
 			# reset player | inv | all
 			if parts.size() >= 2:
@@ -217,32 +238,37 @@ func _process_command(command: String) -> void:
 
 func _show_help() -> void:
 	_add_to_display("=== Debug Console Commands ===")
-	_add_to_display("set [stat] [value]       - Set a stat to an exact value")
-	_add_to_display("add [stat] [value]       - Add (or subtract) from a stat")
+	_add_to_display("set [stat] [value]            - Set a stat to an exact value")
+	_add_to_display("add [stat] [value]            - Add (or subtract) from a stat")
 	_add_to_display("  Stats: health, hydration, nourishment, stamina, endurance, happiness")
-	_add_to_display("time [h] [m]             - Add hours and minutes to current time")
-	_add_to_display("time set [h] [m] [d]     - Set time directly (days optional)")
-	_add_to_display("inv add [id] [count]     - Add item by ID (count defaults to 1)")
-	_add_to_display("inv remove [id] [count]  - Remove item by ID (count defaults to 1)")
-	_add_to_display("equip [slot] [id]        - Equip item by ID into a slot")
-	_add_to_display("unequip [slot]           - Clear an equipment slot")
+	_add_to_display("time [h] [m]                  - Add hours and minutes to current time")
+	_add_to_display("time set [h] [m] [d]          - Set time directly (days optional)")
+	_add_to_display("inv add [id] [count]          - Add item by ID (count defaults to 1)")
+	_add_to_display("inv remove [id] [count]       - Remove item by ID (count defaults to 1)")
+	_add_to_display("equip [slot] [id]             - Equip item by ID into a slot")
+	_add_to_display("unequip [slot]                - Clear an equipment slot")
 	_add_to_display("  Slots: hat, top, pants, shoes, gloves, backpack, sling, waist")
-	_add_to_display("loc [id]                 - Teleport to area by numeric ID")
-	_add_to_display("loc list                 - List all available area IDs and names")
-	_add_to_display("health [value]           - Quick alias: set health")
-	_add_to_display("stamina [value]          - Quick alias: set stamina")
-	_add_to_display("reset player             - Restore all stats and body condition")
-	_add_to_display("reset inv                - Clear inventory and equipment")
-	_add_to_display("reset all                - Full reset (stats + inv + time + location)")
-	_add_to_display("clear                    - Clear console output")
-	_add_to_display("close / exit             - Close the console")
+	_add_to_display("body [part] [condition]       - Set condition of one body part")
+	_add_to_display("body all [condition]          - Set condition of all body parts")
+	_add_to_display("body list                     - Show current condition of all parts")
+	_add_to_display("  Parts: head, abdomen, left_arm, left_hand, left_leg,")
+	_add_to_display("         right_arm, right_hand, right_leg")
+	_add_to_display("  Conditions: Healthy, Hurt, Healed, Bleeding")
+	_add_to_display("loc [id]                      - Teleport to area by numeric ID")
+	_add_to_display("loc list                      - List all available area IDs and names")
+	_add_to_display("health [value]                - Quick alias: set health")
+	_add_to_display("stamina [value]               - Quick alias: set stamina")
+	_add_to_display("reset player                  - Restore all stats and body condition")
+	_add_to_display("reset inv                     - Clear inventory and equipment")
+	_add_to_display("reset all                     - Full reset (stats + inv + time + location)")
+	_add_to_display("clear                         - Clear console output")
+	_add_to_display("close / exit                  - Close the console")
 
 
 # ------------------------------------------------------------------------------
 # Stat setters
 # ------------------------------------------------------------------------------
 
-# Validates that value_str is a number before applying it.
 func _set_stat(stat: String, value_str: String) -> void:
 	if not value_str.is_valid_float():
 		_add_to_display("Invalid value: '%s' — must be a number." % value_str)
@@ -277,7 +303,6 @@ func _set_stat(stat: String, value_str: String) -> void:
 	PlayerData.notify_stats_changed()
 
 
-# Adds (or subtracts with a negative value) from a stat.
 func _add_stat(stat: String, value_str: String) -> void:
 	if not value_str.is_valid_float():
 		_add_to_display("Invalid value: '%s' — must be a number." % value_str)
@@ -315,7 +340,6 @@ func _add_stat(stat: String, value_str: String) -> void:
 # Time commands
 # ------------------------------------------------------------------------------
 
-# Adds hours and minutes to the current in-game clock.
 func _add_time(parts: Array[String]) -> void:
 	if parts.size() >= 3:
 		var h := int(parts[1])
@@ -326,7 +350,6 @@ func _add_time(parts: Array[String]) -> void:
 		_add_to_display("Usage: time [hours] [minutes]")
 
 
-# Overwrites the clock directly without triggering passive effects.
 func _set_time(parts: Array[String]) -> void:
 	if parts.size() >= 4:
 		PlayerData.hours   = int(parts[2])
@@ -343,8 +366,6 @@ func _set_time(parts: Array[String]) -> void:
 # Inventory commands
 # ------------------------------------------------------------------------------
 
-# Adds [count] copies of item [id] directly into the player's inventory.
-# Uses StaticData.get_item() — the same lookup path used everywhere else.
 func _inv_add(parts: Array[String]) -> void:
 	if parts.size() < 3:
 		_add_to_display("Usage: inv add [id] [count]")
@@ -353,7 +374,6 @@ func _inv_add(parts: Array[String]) -> void:
 	var item_id := int(parts[2])
 	var count   := int(parts[3]) if parts.size() >= 4 else 1
 
-	# Validate the ID exists in StaticData before touching PlayerData.
 	var item = StaticData.get_item(item_id)
 	if item == null:
 		_add_to_display("Item ID %d not found in StaticData." % item_id)
@@ -365,7 +385,6 @@ func _inv_add(parts: Array[String]) -> void:
 	_add_to_display("Added %dx %s (ID %d)" % [count, item["Item Name"], item_id])
 
 
-# Removes up to [count] copies of item [id] from the player's inventory.
 func _inv_remove(parts: Array[String]) -> void:
 	if parts.size() < 3:
 		_add_to_display("Usage: inv remove [id] [count]")
@@ -386,7 +405,6 @@ func _inv_remove(parts: Array[String]) -> void:
 # Equipment commands
 # ------------------------------------------------------------------------------
 
-# Looks up the item and places it in the named slot via PlayerData.
 func _equip_item(slot: String, item_id_str: String) -> void:
 	var item_id := int(item_id_str)
 	var item    = StaticData.get_item(item_id)
@@ -395,24 +413,77 @@ func _equip_item(slot: String, item_id_str: String) -> void:
 		_add_to_display("Item ID %d not found in StaticData." % item_id)
 		return
 
-	# PlayerData.set_equipment already warns if the slot name is invalid.
 	PlayerData.set_equipment(slot, item)
 	_add_to_display("Equipped %s in slot '%s'" % [item["Item Name"], slot])
 
 
-# Clears whatever is in the named slot.
 func _unequip_item(slot: String) -> void:
 	PlayerData.clear_equipment(slot)
 	_add_to_display("Unequipped slot: %s" % slot)
 
 
 # ------------------------------------------------------------------------------
+# Body condition commands
+# ------------------------------------------------------------------------------
+
+# The console receives lowercase input, so we normalise the condition string
+# to Title Case before writing it to PlayerData (which expects "Healthy" etc.).
+func _normalise_condition(raw: String) -> String:
+	# Map lowercase input to the exact casing PlayerData and Survivor.gd expect.
+	match raw:
+		"healthy":  return "Healthy"
+		"hurt":     return "Hurt"
+		"healed":   return "Healed"
+		"bleeding": return "Bleeding"
+		_:          return ""   # Signal invalid input to the caller.
+
+
+# Prints the current condition of every body part.
+func _list_body_condition() -> void:
+	_add_to_display("=== Body Condition ===")
+	for part in BODY_PARTS:
+		var cond: String = PlayerData.body_condition.get(part, "Healthy")
+		_add_to_display("  %s: %s" % [part, cond])
+
+
+# Sets one body part to the given condition.
+func _set_body_condition(part_raw: String, condition_raw: String) -> void:
+	# Part names are already lowercase from the dispatcher; validate them.
+	if not BODY_PARTS.has(part_raw):
+		_add_to_display("Unknown body part: '%s'" % part_raw)
+		_add_to_display("Valid parts: %s" % ", ".join(BODY_PARTS))
+		return
+
+	var condition: String = _normalise_condition(condition_raw)
+	if condition.is_empty():
+		_add_to_display("Unknown condition: '%s'" % condition_raw)
+		_add_to_display("Valid conditions: Healthy, Hurt, Healed, Bleeding")
+		return
+
+	PlayerData.body_condition[part_raw] = condition
+	PlayerData.notify_stats_changed()
+	_add_to_display("Body condition set — %s: %s" % [part_raw, condition])
+
+
+# Sets every body part to the same condition.
+func _set_all_body_condition(condition_raw: String) -> void:
+	var condition: String = _normalise_condition(condition_raw)
+	if condition.is_empty():
+		_add_to_display("Unknown condition: '%s'" % condition_raw)
+		_add_to_display("Valid conditions: Healthy, Hurt, Healed, Bleeding")
+		return
+
+	for part in BODY_PARTS:
+		PlayerData.body_condition[part] = condition
+
+	PlayerData.notify_stats_changed()
+	_add_to_display("All body parts set to: %s" % condition)
+
+
+# ------------------------------------------------------------------------------
 # Location commands
 # ------------------------------------------------------------------------------
 
-# Lists every area ID and name from StaticData.areaData.
-# FIX: StaticData is a Node, not a Dictionary — .has() does not exist on it.
-#      Access StaticData.areaData (a Dictionary) directly instead.
 func _list_locations() -> void:
 	if StaticData.areaData.is_empty():
 		_add_to_display("areaData is empty or not yet loaded.")
@@ -424,10 +495,7 @@ func _list_locations() -> void:
 		_add_to_display("ID: %s — %s" % [id, loc.get("Area Name", "Unknown")])
 
 
-# Teleports the player to the area matching the given string ID (e.g. "3").
 func _set_location(loc_id: String) -> void:
-	# FIX: was checking StaticData.has("areaData") which crashes because
-	#      StaticData is a Node, not a Dictionary. Check areaData directly.
 	if not StaticData.areaData.has(loc_id):
 		_add_to_display("Location ID '%s' not found. Use 'loc list' to see valid IDs." % loc_id)
 		return
@@ -441,7 +509,6 @@ func _set_location(loc_id: String) -> void:
 # Reset commands
 # ------------------------------------------------------------------------------
 
-# Restores all vital stats to 100 and every body part to "Healthy".
 func _reset_player() -> void:
 	PlayerData.health      = 100.0
 	PlayerData.hydration   = 100.0
@@ -457,9 +524,7 @@ func _reset_player() -> void:
 	_add_to_display("Player stats and body condition reset to defaults.")
 
 
-# Clears all inventory stacks and empties every equipment slot.
 func _reset_inventory() -> void:
-	# Emit item_removed for every existing stack so the UI cleans up.
 	for item_id in PlayerData.inventory.keys():
 		PlayerData.item_removed.emit(item_id)
 
@@ -472,7 +537,6 @@ func _reset_inventory() -> void:
 	_add_to_display("Inventory and equipment cleared.")
 
 
-# Full reset: time, location, stats, inventory — then immediately saves.
 func _reset_all() -> void:
 	PlayerData.days    = 1
 	PlayerData.hours   = 6
@@ -480,7 +544,6 @@ func _reset_all() -> void:
 
 	PlayerData.adventure_steps = 0
 
-	# Return to Home (area ID "1").
 	if StaticData.areaData.has("1"):
 		PlayerData.current_location = StaticData.areaData["1"]
 	else:

@@ -20,9 +20,27 @@ extends Control
 # Transient per-visit loot remaining in the current area.
 var loot_amount: int = 0
 
+# Tracks the last location we displayed so stats_changed doesn't reroll
+# when unrelated stats (health, time, etc.) fire the signal.
+var _last_displayed_location: Dictionary = {}
+
 
 func _ready() -> void:
+	PlayerData.stats_changed.connect(_on_stats_changed)
 	_update_location_display()
+
+
+# ==============================================================================
+# stats_changed handler
+# ==============================================================================
+
+# Rerolls the location display only when the current location has actually
+# changed (e.g. via the debug console). Ignores signals fired for time ticks,
+# stat changes, inventory updates, etc.
+func _on_stats_changed() -> void:
+	if PlayerData.current_location != _last_displayed_location:
+		_update_location_display()
+
 
 # ==============================================================================
 # Location helpers
@@ -60,12 +78,16 @@ func _pick_random_location() -> Dictionary:
 	return StaticData.areaData["2"]
 
 
-# Updates all labels to reflect the current location.
+# Updates all labels to reflect the current location and rerolls transient
+# per-visit values (zombie count, available loot).
 func _update_location_display() -> void:
-	var loc : Dictionary = PlayerData.current_location
+	var loc: Dictionary = PlayerData.current_location
 
-	var zombie_amount := randi_range(loc["Zombies Min"], loc["Zombies Max"])
-	loot_amount        = int(loc["Loot Amount"])
+	var zombie_amount := randi_range(
+		int(loc.get("Zombies Min", 0)),
+		int(loc.get("Zombies Max", 0))
+	)
+	loot_amount = int(loc.get("Loot Amount", 0))
 
 	zombie_label.text   = str(zombie_amount)
 	loot_label.text     = str(loot_amount)
@@ -73,7 +95,12 @@ func _update_location_display() -> void:
 
 	btn_loot_area.disabled = (loot_amount == 0)
 
-	# Notify so the status bar location label refreshes via MainScene
+	# Remember what we just displayed so _on_stats_changed can skip no-op signals.
+	_last_displayed_location = PlayerData.current_location
+
+	# Notify so the status bar location label refreshes via MainScene.
+	# Guard against re-entrancy: only emit if we weren't already inside a
+	# stats_changed callback (the debug-console path calls notify directly).
 	PlayerData.notify_stats_changed()
 
 
@@ -89,7 +116,6 @@ func _pick_random_loot() -> Array:
 	if loot_table == null or loot_amount == 0:
 		return []
 
-	# Build a list of possible items from the loot table using StaticData.get_item()
 	var possible_items: Array = []
 	for item_id in loot_table:
 		var item = StaticData.get_item(int(item_id))
