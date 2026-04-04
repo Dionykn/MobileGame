@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cj2vfruokvj2e" path="res://Images/bg_Survivor.jpg" id="1_imm3m"]
 [ext_resource type="Texture2D" uid="uid://def0j2jhnabcg" path="res://Images/Healed/Head.png" id="4_ilecy"]
 [ext_resource type="Texture2D" uid="uid://c8iao7x2wxh7g" path="res://Images/Healed/Abdomen.png" id="5_c0nrm"]
-[ext_resource type="Texture2D" uid="uid://dkulgnn6b6fpf" path="res://Images/0_10health bar_.png" id="5_frkco"]
+[ext_resource type="Texture2D" uid="uid://dkulgnn6b6fpf" path="res://Images/empty_health_bar.png" id="5_frkco"]
 [ext_resource type="Texture2D" uid="uid://c4dwk03yfusny" path="res://Images/Healed/Left arm.png" id="6_cox54"]
-[ext_resource type="Texture2D" uid="uid://u3kfl67p4bp1" path="res://Images/white_health bar_.png" id="6_qu7m3"]
+[ext_resource type="Texture2D" uid="uid://u3kfl67p4bp1" path="res://Images/full_health_bar.png" id="6_qu7m3"]
 [ext_resource type="Texture2D" uid="uid://csocwdos8tmks" path="res://Images/Healed/Left hand.png" id="7_iu71m"]
 [ext_resource type="Texture2D" uid="uid://cibpl7ufejc2e" path="res://Images/Healed/Left leg.png" id="8_0mtvq"]
 [ext_resource type="Texture2D" uid="uid://yi7h2bq711il" path="res://Images/Healed/Right arm.png" id="9_wif0g"]
@@ -475,6 +475,28 @@ text = "Happiness"
 horizontal_alignment = 1
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Happiness" unique_id=1763915546]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 55.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("5_frkco")
+texture_over = ExtResource("5_frkco")
+texture_progress = ExtResource("6_qu7m3")
+tint_progress = Color(1, 0.8333334, 0, 1)
+
+[node name="Encumbrance" type="HBoxContainer" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer" unique_id=445664697]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Encumbrance" unique_id=34337730]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_font_sizes/font_size = 24
+text = "Encumbrance"
+horizontal_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/VitalSignsContext/VBoxContainer/Encumbrance" unique_id=1940616167]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 55.0

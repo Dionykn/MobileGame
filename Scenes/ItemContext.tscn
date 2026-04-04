@@ -1,0 +1,226 @@
+[gd_scene format=3 uid="uid://5whxqiv586ny"]
+
+[ext_resource type="Texture2D" uid="uid://c1ikaug83o7nm" path="res://icon.svg" id="1_l3vwc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3vwc"]
+bg_color = Color(0, 1, 0, 0.78431374)
+
+[node name="Control" type="Control" unique_id=508878407]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1611890488]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1459965378]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 300
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 500
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=1609942922]
+layout_mode = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Button" type="Button" parent="MarginContainer" unique_id=897102649]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "  x  "
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer" unique_id=1033462566]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer" unique_id=291825145]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer" unique_id=2080359512]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="Label5" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1876023127]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "Stable Food"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1719087406]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Canned Peaches (3)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer" unique_id=80843732]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=561964965]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_l3vwc")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=106065306]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2076259102]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer2" unique_id=210538363]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "Weight:"
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer2" unique_id=1293584020]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+text = "0.2 KG (0.6 KG)"
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1025064132]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer" unique_id=780322346]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "Effects:"
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer" unique_id=26536029]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+text = "Nourishment +20"
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer" unique_id=1139090394]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+text = "Hydration +5"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MarginContainer/VBoxContainer" unique_id=1170042972]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=111771239]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 18
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+autowrap_mode = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer" unique_id=481828461]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label5" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=42773738]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "Condition"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=1441765150]
+layout_mode = 2
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 18
+theme_override_styles/fill = SubResource("StyleBoxFlat_l3vwc")
+value = 100.0
+rounded = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/MarginContainer/VBoxContainer" unique_id=619579784]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="TakeAll" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=337325388]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Eat"
+
+[node name="TakeAll2" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1422425321]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Eat half"
+
+[node name="TakeAll3" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1417702063]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Eat quarter"
+
+[node name="TakeAll4" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1832570103]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+text = "Open"
+
+[node name="TakeAll5" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=796380617]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+text = "Drop"
+
+[node name="TakeAll6" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1327977791]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 20
+text = "Drop all"
