@@ -11,20 +11,33 @@ extends Node
 # An instance looks like:
 #
 #   {
-#     "instance_id": <int>,   # unique runtime ID, never persisted between runs
-#     "item":        <dict>,  # full static item dict from StaticData
-#     "count":       <int>,   # stack size (see _can_stack)
+#     "instance_id": <int>,       # unique runtime ID, never persisted between runs
+#     "item":        <dict>,      # full static item dict from StaticData
+#     "count":       <int>,       # stack size (see _can_stack)
+#     "freshness":   <float>,     # 0–100; only meaningful for fresh food (decays over time)
+#     "portion":     <float>,     # 0–100; how much of the item remains (partial consume)
 #   }
 #
 # Stacking only happens for items that have no meaningful per-instance state,
 # i.e. they have no Equip slot, no Durability, and no consumable values.
 # Everything else is a stack of 1.
 #
+# FRESHNESS
+# ---------
+# Fresh food (Loot Category "Fresh food") starts at 100 and decays over time.
+# FRESH_FOOD_DECAY_PER_MINUTE controls the rate; at the default value food
+# fully spoils after 3 in-game days.
+#
+# PORTION
+# -------
+# Starts at 100 for all items. Partial consumption reduces it (half → 50,
+# quarter → 75 → 50 → 25 → 0). When portion reaches 0 the item is removed.
+# Equipment shows Durability from the item dict instead (future feature).
+#
 # CARRY CAPACITY
 # --------------
-# Base carry capacity is BASE_CARRY_CAPACITY.
+# Base carry capacity is BASE_CARRY_CAPACITY kg.
 # Each equipped item with an Encumbrance value adds to it.
-# The derived value is read via get_carry_capacity().
 # ==============================================================================
 
 signal stats_changed
@@ -32,8 +45,10 @@ signal item_added(instance: Dictionary)
 signal item_updated(instance_id: int, new_count: int)
 signal item_removed(instance_id: int)
 
-const SAVE_PATH          := "user://savegame.json"
+const SAVE_PATH           := "user://savegame.json"
 const BASE_CARRY_CAPACITY := 10.0
+# 100 freshness / (3 days × 24 h × 60 min) ≈ 0.0231 per in-game minute.
+const FRESH_FOOD_DECAY_PER_MINUTE := 100.0 / (3.0 * 24.0 * 60.0)
 
 var new_game: bool = true
 
@@ -55,8 +70,6 @@ var endurance:   float = 100.0
 var happiness:   float = 100.0
 
 # --- Equipment ----------------------------------------------------------------
-# Slot keys match the Equip values used in Items.json (case-sensitive).
-# "Left hand" and "Right hand" are separate; "Two handed" occupies both at once.
 var equipment: Dictionary = {
 	"Hat":        null,
 	"Top":        null,
@@ -71,11 +84,7 @@ var equipment: Dictionary = {
 }
 
 # --- Inventory ----------------------------------------------------------------
-# Array of instance Dictionaries (see header comment).
 var inventory: Array = []
-
-# Monotonically increasing counter used to assign unique instance IDs at
-# runtime. Never saved — instances are rebuilt from the save data on load.
 var _next_instance_id: int = 1
 
 # --- Body condition -----------------------------------------------------------
@@ -104,25 +113,20 @@ func _ready() -> void:
 # Carry capacity
 # ==============================================================================
 
-# Returns the player's total carry capacity:
-# base + Encumbrance values of all currently equipped items.
 func get_carry_capacity() -> float:
 	var total := BASE_CARRY_CAPACITY
 	for slot in equipment:
 		var equipped = equipment[slot]
 		if equipped == null:
 			continue
-		var enc = equipped.get("Encumbrance", 0.0)
-		total += float(enc)
+		total += float(equipped.get("Encumbrance", 0.0))
 	return total
 
 
-# Returns the total weight currently carried in the inventory.
 func get_carried_weight() -> float:
 	var total := 0.0
 	for instance in inventory:
-		var w = instance["item"].get("Weight", 0.0)
-		total += float(w) * instance["count"]
+		total += float(instance["item"].get("Weight", 0.0)) * instance["count"]
 	return total
 
 
@@ -131,15 +135,15 @@ func get_carried_weight() -> float:
 # ==============================================================================
 
 func save_game() -> void:
-	# Serialise inventory — instance_ids are runtime-only, so we drop them.
 	var inv_serialized: Array = []
 	for instance in inventory:
 		inv_serialized.append({
-			"item_id": instance["item"]["ID"],
-			"count":   instance["count"],
+			"item_id":   instance["item"]["ID"],
+			"count":     instance["count"],
+			"freshness": instance["freshness"],
+			"portion":   instance["portion"],
 		})
 
-	# Serialise equipment — store item IDs only; null slots store null.
 	var equip_serialized: Dictionary = {}
 	for slot in equipment:
 		var eq = equipment[slot]
@@ -200,50 +204,45 @@ func load_game() -> void:
 	endurance   = float(parsed.get("endurance",   endurance))
 	happiness   = float(parsed.get("happiness",   happiness))
 
-	# --- Equipment ------------------------------------------------------------
 	var saved_equipment: Dictionary = parsed.get("equipment", {})
 	for slot in saved_equipment:
 		if not equipment.has(slot):
 			continue
 		var item_id = saved_equipment[slot]
-		if item_id == null:
-			equipment[slot] = null
-		else:
-			equipment[slot] = StaticData.get_item(int(item_id))
+		equipment[slot] = null if item_id == null else StaticData.get_item(int(item_id))
 
-	# --- Body condition -------------------------------------------------------
 	var saved_body: Dictionary = parsed.get("body_condition", {})
 	for part in saved_body:
 		if body_condition.has(part):
 			body_condition[part] = saved_body[part]
 
-	# --- Inventory ------------------------------------------------------------
-	# Rebuild instances from saved data. Handles both the new Array format and
-	# the old Dictionary format (keyed by item ID string) for backwards compat.
-	# Signals are not emitted here — Survivor._ready() reads inventory directly.
 	var raw_inventory = parsed.get("inventory", [])
 	var entries_to_load: Array = []
 
 	if raw_inventory is Array:
 		entries_to_load = raw_inventory
 	elif raw_inventory is Dictionary:
-		# Old format: { "1001": { "item": {...}, "count": 3 } }
+		# Backwards-compat with old dict format.
 		for key in raw_inventory:
 			var old_entry = raw_inventory[key]
 			if old_entry is Dictionary:
 				entries_to_load.append({
-					"item_id": int(key),
-					"count":   int(old_entry.get("count", 1)),
+					"item_id":   int(key),
+					"count":     int(old_entry.get("count", 1)),
+					"freshness": float(old_entry.get("freshness", old_entry.get("condition", 100.0))),
+					"portion":   float(old_entry.get("portion", 100.0)),
 				})
 
 	for entry in entries_to_load:
-		var item_id: int = int(entry.get("item_id", 0))
-		var count:   int = int(entry.get("count",   1))
+		var item_id:   int   = int(entry.get("item_id",   0))
+		var count:     int   = int(entry.get("count",     1))
+		var freshness: float = float(entry.get("freshness", 100.0))
+		var portion:   float = float(entry.get("portion",   100.0))
 		var item = StaticData.get_item(item_id)
 		if item == null:
 			push_warning("PlayerData: saved item ID %d not found in StaticData — skipped." % item_id)
 			continue
-		var instance := _make_instance(item, count)
+		var instance := _make_instance(item, count, freshness, portion)
 		inventory.append(instance)
 
 	notify_stats_changed()
@@ -254,6 +253,9 @@ func load_game() -> void:
 # ==============================================================================
 
 func add_time(h: int, m: int) -> void:
+	var total_minutes := h * 60 + m
+	_decay_fresh_food(total_minutes)
+
 	minutes += m
 	if minutes >= 60:
 		hours   += minutes / 60
@@ -263,6 +265,13 @@ func add_time(h: int, m: int) -> void:
 		days  += hours / 24
 		hours  = hours % 24
 	notify_stats_changed()
+
+
+func _decay_fresh_food(elapsed_minutes: int) -> void:
+	var decay := FRESH_FOOD_DECAY_PER_MINUTE * float(elapsed_minutes)
+	for instance in inventory:
+		if _is_fresh_food(instance["item"]):
+			instance["freshness"] = maxf(instance["freshness"] - decay, 0.0)
 
 
 # ==============================================================================
@@ -277,19 +286,30 @@ func notify_stats_changed() -> void:
 # Inventory helpers
 # ==============================================================================
 
-# Creates a new inventory instance dict with a fresh runtime ID.
-func _make_instance(item: Dictionary, count: int = 1) -> Dictionary:
+# Returns true when item belongs to the "Fresh food" loot category.
+func _is_fresh_food(item: Dictionary) -> bool:
+	var cat = item.get("Loot Category", "")
+	if cat is Array:
+		return cat.has("Fresh food")
+	return cat == "Fresh food"
+
+
+func _make_instance(
+		item:      Dictionary,
+		count:     int   = 1,
+		freshness: float = 100.0,
+		portion:   float = 100.0) -> Dictionary:
 	var instance := {
 		"instance_id": _next_instance_id,
 		"item":        item,
 		"count":       count,
+		"freshness":   freshness,
+		"portion":     portion,
 	}
 	_next_instance_id += 1
 	return instance
 
 
-# Returns true when two items can share a stack.
-# Stackable = no Equip slot, no Durability, no consumable fields.
 func _can_stack(item: Dictionary) -> bool:
 	if item.has("Equip"):
 		return false
@@ -301,7 +321,6 @@ func _can_stack(item: Dictionary) -> bool:
 	return true
 
 
-# Finds an existing stackable instance for this item, or null.
 func _find_stack(item: Dictionary) -> Variant:
 	if not _can_stack(item):
 		return null
@@ -323,8 +342,6 @@ func add_to_inventory(item: Dictionary) -> void:
 	notify_stats_changed()
 
 
-# Removes one from the stack (or the whole instance if count reaches 0).
-# Returns true on success.
 func remove_from_inventory(instance_id: int) -> bool:
 	for i in inventory.size():
 		var instance: Dictionary = inventory[i]
@@ -341,7 +358,6 @@ func remove_from_inventory(instance_id: int) -> bool:
 	return false
 
 
-# Removes the entire instance regardless of count (e.g. on equip).
 func remove_instance(instance_id: int) -> bool:
 	for i in inventory.size():
 		if inventory[i]["instance_id"] == instance_id:
@@ -352,7 +368,6 @@ func remove_instance(instance_id: int) -> bool:
 	return false
 
 
-# Returns the instance dict for a given instance_id, or null.
 func get_instance(instance_id: int) -> Variant:
 	for instance in inventory:
 		if instance["instance_id"] == instance_id:
@@ -364,16 +379,6 @@ func get_instance(instance_id: int) -> Variant:
 # Equipment helpers
 # ==============================================================================
 
-# Returns the valid equip options for an item as an Array of slot strings,
-# or an empty Array if the item cannot be equipped.
-#
-# Slot strings in the JSON / returned array:
-#   "Hat", "Top", "Pants", "Shoes", "Gloves", "Backpack", "Sling", "Waist"
-#   "Left hand", "Right hand"  — player chooses one hand
-#   "Two handed"               — item occupies both hands simultaneously
-#
-# Items may list several options, e.g. ["Left hand", "Right hand", "Two handed"]
-# meaning the player can use it one-handed OR two-handed.
 func get_equip_slots(item: Dictionary) -> Array:
 	var equip = item.get("Equip", null)
 	if equip == null:
@@ -383,23 +388,18 @@ func get_equip_slots(item: Dictionary) -> Array:
 	return [equip]
 
 
-# Returns true if the item fills both hand slots when equipped in the given slot.
 func _is_two_handed_slot(slot: String) -> bool:
 	return slot == "Two handed"
 
 
-# Equips an item instance from inventory into the given slot.
-# If "Two handed" is passed as the slot, both hand slots are filled.
-# Any previously equipped item in the target slot(s) is returned to inventory.
-# Returns true on success.
 func equip_item(instance_id: int, slot: String) -> bool:
 	var instance = get_instance(instance_id)
 	if instance == null:
 		push_warning("PlayerData.equip_item: instance %d not found." % instance_id)
 		return false
 
-	var item: Dictionary  = instance["item"]
-	var allowed_slots     := get_equip_slots(item)
+	var item: Dictionary = instance["item"]
+	var allowed_slots    := get_equip_slots(item)
 
 	if allowed_slots.is_empty():
 		push_warning("PlayerData.equip_item: item '%s' has no Equip field." % item.get("Item Name", "?"))
@@ -409,14 +409,11 @@ func equip_item(instance_id: int, slot: String) -> bool:
 		push_warning("PlayerData.equip_item: slot '%s' not valid for '%s'." % [slot, item.get("Item Name", "?")])
 		return false
 
-	# Determine which equipment dictionary keys to fill.
 	var slots_to_fill: Array = ["Left hand", "Right hand"] if _is_two_handed_slot(slot) else [slot]
 
-	# Unequip whatever is currently in each target slot first.
 	for s in slots_to_fill:
 		_unequip_slot_internal(s)
 
-	# Remove from inventory and place into equipment slot(s).
 	remove_instance(instance_id)
 	for s in slots_to_fill:
 		equipment[s] = item
@@ -425,8 +422,6 @@ func equip_item(instance_id: int, slot: String) -> bool:
 	return true
 
 
-# Unequips the item in the given slot and returns it to inventory.
-# If the slot holds a two-handed item, both hand slots are cleared.
 func unequip_slot(slot: String) -> bool:
 	if not equipment.has(slot):
 		push_warning("PlayerData.unequip_slot: unknown slot '%s'." % slot)
@@ -438,8 +433,6 @@ func unequip_slot(slot: String) -> bool:
 	return true
 
 
-# Clears a slot (and its mirror for two-handed items) and returns the item
-# to inventory. Does NOT emit stats_changed — callers handle that.
 func _unequip_slot_internal(slot: String) -> void:
 	if not equipment.has(slot):
 		return
@@ -447,8 +440,6 @@ func _unequip_slot_internal(slot: String) -> void:
 	if item == null:
 		return
 
-	# Two-handed items are stored in both hand slots with the same reference.
-	# Check the mirror slot to decide whether to clear both.
 	if slot == "Left hand" and equipment["Right hand"] == item:
 		equipment["Left hand"]  = null
 		equipment["Right hand"] = null

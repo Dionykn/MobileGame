@@ -81,6 +81,10 @@ var _body_textures: Dictionary = {}
 # --- Inventory grid -----------------------------------------------------------
 @onready var inventory_grid: GridContainer = $MarginContainer/PanelContainer/ScrollContainer/VBoxContainer/InventoryContext/GridContainer
 
+# --- Item context popup -------------------------------------------------------
+# Loaded from ItemContext.tscn and added as a child so it renders on top.
+var _item_context: Control = null
+
 # --- Slot picker popup --------------------------------------------------------
 var _slot_picker:         Control = null
 var _pending_instance_id: int     = -1
@@ -114,6 +118,7 @@ func _ready() -> void:
 
 	_wire_equipment_slot_buttons()
 	_build_slot_picker()
+	_build_item_context()
 
 	PlayerData.stats_changed.connect(_refresh_ui)
 	PlayerData.item_added.connect(_on_item_added)
@@ -122,6 +127,36 @@ func _ready() -> void:
 
 	_refresh_ui()
 	_rebuild_inventory_grid()
+
+
+# ==============================================================================
+# Item context popup
+# ==============================================================================
+
+func _build_item_context() -> void:
+	var packed: PackedScene = load("res://Scenes/ItemContext.tscn")
+	if packed == null:
+		push_error("Survivor: could not load res://Scenes/ItemContext.tscn")
+		return
+	_item_context = packed.instantiate()
+	# Connect close / action signals before adding to tree.
+	_item_context.action_taken.connect(_on_item_context_action_taken)
+	# Add on top of everything in this scene.
+	add_child(_item_context)
+
+
+func _show_item_context(instance_id: int) -> void:
+	if _item_context == null:
+		return
+	var instance = PlayerData.get_instance(instance_id)
+	if instance == null:
+		return
+	_item_context.show_item(instance)
+
+
+func _on_item_context_action_taken() -> void:
+	# No extra work needed — PlayerData signals already drive the grid updates.
+	pass
 
 
 # ==============================================================================
@@ -348,19 +383,8 @@ func _create_inventory_button(instance: Dictionary) -> void:
 
 
 func _on_inventory_item_pressed(instance_id: int) -> void:
-	var instance = PlayerData.get_instance(instance_id)
-	if instance == null:
-		return
-	var item:  Dictionary = instance["item"]
-	var slots: Array      = PlayerData.get_equip_slots(item)
-	if slots.is_empty():
-		return
-	if slots.size() == 1:
-		# Only one option — equip directly without a picker.
-		PlayerData.equip_item(instance_id, slots[0])
-	else:
-		# Multiple options (e.g. left hand / right hand / two handed) — let player pick.
-		_show_slot_picker(instance_id, slots)
+	# Always open the ItemContext popup — it handles all actions internally.
+	_show_item_context(instance_id)
 
 
 # --- Surgical inventory signal handlers ---------------------------------------
