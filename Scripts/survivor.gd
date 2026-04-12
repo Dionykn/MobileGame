@@ -85,10 +85,6 @@ var _body_textures: Dictionary = {}
 # Loaded from ItemContext.tscn and added as a child so it renders on top.
 var _item_context: Control = null
 
-# --- Slot picker popup --------------------------------------------------------
-var _slot_picker:         Control = null
-var _pending_instance_id: int     = -1
-
 
 # ==============================================================================
 # Lifecycle
@@ -117,7 +113,6 @@ func _ready() -> void:
 	inventory_grid.resized.connect(_update_grid_columns)
 
 	_wire_equipment_slot_buttons()
-	_build_slot_picker()
 	_build_item_context()
 
 	PlayerData.stats_changed.connect(_refresh_ui)
@@ -194,77 +189,6 @@ func _on_equipment_slot_pressed(slot: String) -> void:
 	if PlayerData.equipment.get(slot) == null:
 		return
 	PlayerData.unequip_slot(slot)
-
-
-# ==============================================================================
-# Slot picker popup
-# ==============================================================================
-
-func _build_slot_picker() -> void:
-	_slot_picker = Control.new()
-	_slot_picker.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_slot_picker.visible = false
-
-	var backdrop := ColorRect.new()
-	backdrop.set_anchors_preset(Control.PRESET_FULL_RECT)
-	backdrop.color = Color(0, 0, 0, 0.6)
-	_slot_picker.add_child(backdrop)
-
-	var panel := PanelContainer.new()
-	panel.set_anchors_preset(Control.PRESET_CENTER)
-	_slot_picker.add_child(panel)
-
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 16)
-	panel.add_child(vbox)
-
-	var lbl := Label.new()
-	lbl.text = "Equip in which slot?"
-	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.add_theme_font_size_override("font_size", 24)
-	vbox.add_child(lbl)
-	vbox.set_meta("slot_label", lbl)
-
-	var cancel := Button.new()
-	cancel.text = "Cancel"
-	cancel.add_theme_font_size_override("font_size", 22)
-	cancel.custom_minimum_size = Vector2(200, 64)
-	cancel.pressed.connect(func(): _slot_picker.visible = false)
-	vbox.add_child(cancel)
-	vbox.set_meta("cancel_btn", cancel)
-
-	add_child(_slot_picker)
-
-
-func _show_slot_picker(instance_id: int, slots: Array) -> void:
-	_pending_instance_id = instance_id
-	var vbox: VBoxContainer = _slot_picker.get_child(1).get_child(0)
-
-	var label_node  = vbox.get_meta("slot_label")
-	var cancel_node = vbox.get_meta("cancel_btn")
-	for child in vbox.get_children():
-		if child != label_node and child != cancel_node:
-			child.queue_free()
-
-	for slot in slots:
-		var btn := Button.new()
-		btn.text = slot
-		btn.add_theme_font_size_override("font_size", 22)
-		btn.custom_minimum_size = Vector2(200, 64)
-		var captured_slot: String = slot
-		btn.pressed.connect(func(): _on_slot_picked(captured_slot))
-		vbox.add_child(btn)
-		vbox.move_child(cancel_node, vbox.get_child_count() - 1)
-
-	_slot_picker.visible = true
-
-
-func _on_slot_picked(slot: String) -> void:
-	_slot_picker.visible = false
-	if _pending_instance_id == -1:
-		return
-	PlayerData.equip_item(_pending_instance_id, slot)
-	_pending_instance_id = -1
 
 
 # ==============================================================================
