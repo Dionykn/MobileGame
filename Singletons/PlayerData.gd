@@ -14,30 +14,50 @@ extends Node
 #     "instance_id": <int>,       # unique runtime ID, never persisted between runs
 #     "item":        <dict>,      # full static item dict from StaticData
 #     "count":       <int>,       # stack size (see _can_stack)
-#     "freshness":   <float>,     # 0–100; only meaningful for fresh food (decays over time)
+#     "freshness":   <float>,     # 0–100; fresh food and opened stable food decay over time
 #     "portion":     <float>,     # 0–100; how much of the item remains (partial consume)
+#     "durability":  <float>,     # 0–100; equipment only; broken at 0
+#     "opened":      <bool>,      # true once a stable food container has been opened
 #   }
 #
-# Stacking only happens for items that have no meaningful per-instance state,
-# i.e. they have no Equip slot, no Durability, and no consumable values.
-# Everything else is a stack of 1.
+# Stacking only happens for items that have no meaningful per-instance state.
+# Opened items never stack with unopened ones of the same ID.
 #
 # FRESHNESS
 # ---------
-# Fresh food (Loot Category "Fresh food") starts at 100 and decays over time.
-# FRESH_FOOD_DECAY_PER_MINUTE controls the rate; at the default value food
-# fully spoils after 3 in-game days.
+# Fresh food (Loot Category "Fresh food") and opened stable food start at 100
+# and decay over time at FOOD_DECAY_PER_MINUTE.
 #
 # PORTION
 # -------
-# Starts at 100 for all items. Partial consumption reduces it (half → 50,
-# quarter → 75 → 50 → 25 → 0). When portion reaches 0 the item is removed.
-# Equipment shows Durability from the item dict instead (future feature).
+# Starts at 100 for all items. Partial consumption reduces it.
+# When portion reaches 0 the item is removed.
+#
+# DURABILITY
+# ----------
+# Starts at the item's Durability value (or 100 if unset). At 0 the item is
+# broken: equipment effects are nullified but the item stays in inventory for
+# recycling or dropping.
 #
 # CARRY CAPACITY
 # --------------
 # Base carry capacity is BASE_CARRY_CAPACITY kg.
 # Each equipped item with an Encumbrance value adds to it.
+# Broken equipped items do NOT contribute encumbrance.
+#
+# SLEEP
+# -----
+# Sleep runs in minute-by-minute increments via sleep_minutes().
+# Each minute restores ENDURANCE_RESTORE_PER_MINUTE endurance and drains
+# nourishment/hydration at the passive (sleeping) rate.
+# Sleep is interrupted early when endurance reaches 100 or any tracked vital
+# (health, hydration, nourishment, stamina, happiness) drops to 10 or below.
+#
+# SAVING
+# ------
+# Normal saves happen on home arrival and departure only.
+# A separate resume-only save is written when the app goes to background so
+# Android cannot kill a run silently. That save is deleted on clean home-return.
 # ==============================================================================
 
 signal stats_changed
@@ -45,10 +65,20 @@ signal item_added(instance: Dictionary)
 signal item_updated(instance_id: int, new_count: int)
 signal item_removed(instance_id: int)
 
-const SAVE_PATH           := "user://savegame.json"
+const SAVE_PATH        := "user://savegame.json"
+const RESUME_SAVE_PATH := "user://resume.json"
 const BASE_CARRY_CAPACITY := 10.0
+
 # 100 freshness / (3 days × 24 h × 60 min) ≈ 0.0231 per in-game minute.
-const FRESH_FOOD_DECAY_PER_MINUTE := 100.0 / (3.0 * 24.0 * 60.0)
+const FOOD_DECAY_PER_MINUTE := 100.0 / (3.0 * 24.0 * 60.0)
+
+# Sleep constants (per in-game minute).
+const ENDURANCE_RESTORE_PER_MINUTE  := 100.0 / (8.0 * 60.0)   # full restore in ~8 h
+const NOURISHMENT_DRAIN_PER_MINUTE  := 100.0 / (24.0 * 60.0)  # same as awake baseline
+const HYDRATION_DRAIN_PER_MINUTE    := 100.0 / (24.0 * 60.0)
+
+# Any vital at or below this triggers early wake-up.
+const SLEEP_INTERRUPT_THRESHOLD := 10.0
 
 var new_game: bool = true
 
@@ -78,7 +108,6 @@ var equipment: Dictionary = {
 	"Gloves":     null,
 	"Backpack":   null,
 	"Sling":      null,
-	"Waist":      null,
 	"Left hand":  null,
 	"Right hand": null,
 }
@@ -105,7 +134,6 @@ var body_condition: Dictionary = {
 # ==============================================================================
 
 func _ready() -> void:
-	stats_changed.connect(save_game)
 	load_game()
 
 
@@ -119,6 +147,10 @@ func get_carry_capacity() -> float:
 		var equipped = equipment[slot]
 		if equipped == null:
 			continue
+		# Broken items contribute no encumbrance bonus.
+		var instance = _get_equipped_instance(slot)
+		if instance != null and instance["durability"] <= 0.0:
+			continue
 		total += float(equipped.get("Encumbrance", 0.0))
 	return total
 
@@ -130,18 +162,32 @@ func get_carried_weight() -> float:
 	return total
 
 
+# Returns the inventory instance currently filling an equipment slot, or null.
+# Equipment stores the item dict only, so we match by reference.
+func _get_equipped_instance(slot: String) -> Variant:
+	var item = equipment.get(slot)
+	if item == null:
+		return null
+	for instance in inventory:
+		if instance["item"] == item:
+			return instance
+	return null
+
+
 # ==============================================================================
 # Save / Load
 # ==============================================================================
 
-func save_game() -> void:
+func _serialise() -> Dictionary:
 	var inv_serialized: Array = []
 	for instance in inventory:
 		inv_serialized.append({
-			"item_id":   instance["item"]["ID"],
-			"count":     instance["count"],
-			"freshness": instance["freshness"],
-			"portion":   instance["portion"],
+			"item_id":    instance["item"]["ID"],
+			"count":      instance["count"],
+			"freshness":  instance["freshness"],
+			"portion":    instance["portion"],
+			"durability": instance["durability"],
+			"opened":     instance["opened"],
 		})
 
 	var equip_serialized: Dictionary = {}
@@ -149,7 +195,8 @@ func save_game() -> void:
 		var eq = equipment[slot]
 		equip_serialized[slot] = eq["ID"] if eq != null else null
 
-	var data := {
+	return {
+		"save_version":     1,
 		"days":             days,
 		"hours":            hours,
 		"minutes":          minutes,
@@ -166,36 +213,53 @@ func save_game() -> void:
 		"body_condition":   body_condition,
 	}
 
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+
+func _write_save(path: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
-		push_error("PlayerData: could not open save file for writing — %s" % SAVE_PATH)
+		push_error("PlayerData: could not open save file for writing — %s" % path)
 		return
-	file.store_string(JSON.stringify(data, "\t"))
+	file.store_string(JSON.stringify(_serialise(), "\t"))
 	file.close()
 
 
+func save_game() -> void:
+	_write_save(SAVE_PATH)
+	# Clean up any leftover resume save when we reach a proper save point.
+	if FileAccess.file_exists(RESUME_SAVE_PATH):
+		DirAccess.remove_absolute(RESUME_SAVE_PATH)
+
+
+func save_resume() -> void:
+	_write_save(RESUME_SAVE_PATH)
+
+
 func load_game() -> void:
-	if not FileAccess.file_exists(SAVE_PATH):
+	# Prefer a resume save (mid-run) over a normal save.
+	var path := RESUME_SAVE_PATH if FileAccess.file_exists(RESUME_SAVE_PATH) else SAVE_PATH
+	if not FileAccess.file_exists(path):
 		return
 
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_error("PlayerData: could not open save file for reading — %s" % SAVE_PATH)
+		push_error("PlayerData: could not open save file for reading — %s" % path)
 		return
 
 	var parsed = JSON.parse_string(file.get_as_text())
 	file.close()
-	new_game = false
 
-	if parsed == null or not parsed is Dictionary:
-		push_error("PlayerData: save file is corrupt or unreadable.")
+	# If the save is missing, corrupt, or from an incompatible version, start fresh.
+	if parsed == null or not parsed is Dictionary or not parsed.has("save_version"):
+		push_warning("PlayerData: save file incompatible or corrupt — starting new game.")
 		return
 
-	days             = int(parsed.get("days",             days))
-	hours            = int(parsed.get("hours",            hours))
-	minutes          = int(parsed.get("minutes",          minutes))
-	adventure_steps  = int(parsed.get("adventure_steps",  adventure_steps))
-	current_location = parsed.get("current_location",     current_location)
+	new_game = false
+
+	days             = int(parsed.get("days",            days))
+	hours            = int(parsed.get("hours",           hours))
+	minutes          = int(parsed.get("minutes",         minutes))
+	adventure_steps  = int(parsed.get("adventure_steps", adventure_steps))
+	current_location = parsed.get("current_location",    current_location)
 
 	health      = float(parsed.get("health",      health))
 	hydration   = float(parsed.get("hydration",   hydration))
@@ -217,32 +281,22 @@ func load_game() -> void:
 			body_condition[part] = saved_body[part]
 
 	var raw_inventory = parsed.get("inventory", [])
-	var entries_to_load: Array = []
+	if not raw_inventory is Array:
+		push_warning("PlayerData: inventory data unreadable — starting with empty inventory.")
+		raw_inventory = []
 
-	if raw_inventory is Array:
-		entries_to_load = raw_inventory
-	elif raw_inventory is Dictionary:
-		# Backwards-compat with old dict format.
-		for key in raw_inventory:
-			var old_entry = raw_inventory[key]
-			if old_entry is Dictionary:
-				entries_to_load.append({
-					"item_id":   int(key),
-					"count":     int(old_entry.get("count", 1)),
-					"freshness": float(old_entry.get("freshness", old_entry.get("condition", 100.0))),
-					"portion":   float(old_entry.get("portion", 100.0)),
-				})
-
-	for entry in entries_to_load:
-		var item_id:   int   = int(entry.get("item_id",   0))
-		var count:     int   = int(entry.get("count",     1))
-		var freshness: float = float(entry.get("freshness", 100.0))
-		var portion:   float = float(entry.get("portion",   100.0))
+	for entry in raw_inventory:
+		var item_id:    int   = int(entry.get("item_id",    0))
+		var count:      int   = int(entry.get("count",      1))
+		var freshness:  float = float(entry.get("freshness",  100.0))
+		var portion:    float = float(entry.get("portion",    100.0))
+		var durability: float = float(entry.get("durability", 100.0))
+		var opened:     bool  = bool(entry.get("opened",      false))
 		var item = StaticData.get_item(item_id)
 		if item == null:
 			push_warning("PlayerData: saved item ID %d not found in StaticData — skipped." % item_id)
 			continue
-		var instance := _make_instance(item, count, freshness, portion)
+		var instance := _make_instance(item, count, freshness, portion, durability, opened)
 		inventory.append(instance)
 
 	notify_stats_changed()
@@ -254,8 +308,7 @@ func load_game() -> void:
 
 func add_time(h: int, m: int) -> void:
 	var total_minutes := h * 60 + m
-	_decay_fresh_food(total_minutes)
-
+	_decay_food(total_minutes)
 	minutes += m
 	if minutes >= 60:
 		hours   += minutes / 60
@@ -267,11 +320,66 @@ func add_time(h: int, m: int) -> void:
 	notify_stats_changed()
 
 
-func _decay_fresh_food(elapsed_minutes: int) -> void:
-	var decay := FRESH_FOOD_DECAY_PER_MINUTE * float(elapsed_minutes)
+func _decay_food(elapsed_minutes: int) -> void:
+	var decay := FOOD_DECAY_PER_MINUTE * float(elapsed_minutes)
 	for instance in inventory:
-		if _is_fresh_food(instance["item"]):
+		if _instance_decays(instance):
 			instance["freshness"] = maxf(instance["freshness"] - decay, 0.0)
+
+
+# Returns true when this instance should have its freshness decay over time.
+func _instance_decays(instance: Dictionary) -> bool:
+	if _is_fresh_food(instance["item"]):
+		return true
+	if _is_stable_food(instance["item"]) and instance["opened"]:
+		return true
+	return false
+
+
+# ==============================================================================
+# Sleep
+# ==============================================================================
+
+# Attempts to sleep for up to max_minutes in-game minutes.
+# Processes each minute individually so stat changes are gradual.
+# Returns the number of minutes actually slept.
+func sleep_minutes(max_minutes: int) -> int:
+	var slept := 0
+	for _i in max_minutes:
+		if endurance >= 100.0:
+			break
+		if _any_vital_critical():
+			break
+
+		# Restore endurance.
+		endurance = minf(endurance + ENDURANCE_RESTORE_PER_MINUTE, 100.0)
+
+		# Drain nourishment and hydration.
+		nourishment = maxf(nourishment - NOURISHMENT_DRAIN_PER_MINUTE, 0.0)
+		hydration   = maxf(hydration   - HYDRATION_DRAIN_PER_MINUTE,   0.0)
+
+		# Advance the clock (this also decays food).
+		add_time(0, 1)
+		slept += 1
+
+		# Re-check after advancing time (a drain may have crossed the threshold).
+		if _any_vital_critical():
+			break
+
+	notify_stats_changed()
+	return slept
+
+
+# Returns true if any tracked vital is at or below the interrupt threshold.
+# Encumbrance is not a vital and is intentionally excluded.
+func _any_vital_critical() -> bool:
+	return (
+		health      <= SLEEP_INTERRUPT_THRESHOLD or
+		hydration   <= SLEEP_INTERRUPT_THRESHOLD or
+		nourishment <= SLEEP_INTERRUPT_THRESHOLD or
+		stamina     <= SLEEP_INTERRUPT_THRESHOLD or
+		happiness   <= SLEEP_INTERRUPT_THRESHOLD
+	)
 
 
 # ==============================================================================
@@ -286,7 +394,6 @@ func notify_stats_changed() -> void:
 # Inventory helpers
 # ==============================================================================
 
-# Returns true when item belongs to the "Fresh food" loot category.
 func _is_fresh_food(item: Dictionary) -> bool:
 	var cat = item.get("Loot Category", "")
 	if cat is Array:
@@ -294,23 +401,41 @@ func _is_fresh_food(item: Dictionary) -> bool:
 	return cat == "Fresh food"
 
 
+func _is_stable_food(item: Dictionary) -> bool:
+	var cat = item.get("Loot Category", "")
+	if cat is Array:
+		return cat.has("Stable food")
+	return cat == "Stable food"
+
+
 func _make_instance(
-		item:      Dictionary,
-		count:     int   = 1,
-		freshness: float = 100.0,
-		portion:   float = 100.0) -> Dictionary:
+		item:       Dictionary,
+		count:      int   = 1,
+		freshness:  float = 100.0,
+		portion:    float = 100.0,
+		durability: float = -1.0,   # -1 means derive from item dict
+		opened:     bool  = false) -> Dictionary:
+	var dur: float
+	if durability < 0.0:
+		dur = float(item.get("Durability", 100.0))
+	else:
+		dur = durability
 	var instance := {
 		"instance_id": _next_instance_id,
 		"item":        item,
 		"count":       count,
 		"freshness":   freshness,
 		"portion":     portion,
+		"durability":  dur,
+		"opened":      opened,
 	}
 	_next_instance_id += 1
 	return instance
 
 
-func _can_stack(item: Dictionary) -> bool:
+# Items can stack when they have no meaningful per-instance state.
+# Opened items never stack with unopened ones.
+func _can_stack(item: Dictionary, opened: bool) -> bool:
 	if item.has("Equip"):
 		return false
 	if item.has("Durability"):
@@ -318,20 +443,23 @@ func _can_stack(item: Dictionary) -> bool:
 	if item.has("Happiness") or item.has("Nutrition") or \
 	   item.has("Hydration") or item.has("Endurance"):
 		return false
+	# Stable food that has been opened must not stack with sealed units.
+	if _is_stable_food(item) and opened:
+		return false
 	return true
 
 
-func _find_stack(item: Dictionary) -> Variant:
-	if not _can_stack(item):
+func _find_stack(item: Dictionary, opened: bool) -> Variant:
+	if not _can_stack(item, opened):
 		return null
 	for instance in inventory:
-		if instance["item"]["ID"] == item["ID"]:
+		if instance["item"]["ID"] == item["ID"] and instance["opened"] == opened:
 			return instance
 	return null
 
 
 func add_to_inventory(item: Dictionary) -> void:
-	var existing = _find_stack(item)
+	var existing = _find_stack(item, false)
 	if existing != null:
 		existing["count"] += 1
 		item_updated.emit(existing["instance_id"], existing["count"])
@@ -340,6 +468,22 @@ func add_to_inventory(item: Dictionary) -> void:
 		inventory.append(instance)
 		item_added.emit(instance)
 	notify_stats_changed()
+
+
+# Opens a stable food instance: marks it as opened and gives it a freshness stat.
+# Opened instances will not stack with sealed ones.
+func open_item(instance_id: int) -> bool:
+	var instance = get_instance(instance_id)
+	if instance == null:
+		return false
+	if not _is_stable_food(instance["item"]):
+		return false
+	if instance["opened"]:
+		return false
+	instance["opened"]    = true
+	instance["freshness"] = 100.0
+	notify_stats_changed()
+	return true
 
 
 func remove_from_inventory(instance_id: int) -> bool:

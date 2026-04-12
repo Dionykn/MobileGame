@@ -26,7 +26,7 @@ const BODY_CONDITIONS: Array = ["Healthy", "Hurt", "Healed", "Bleeding"]
 # Valid equipment slot names (must match PlayerData.equipment keys exactly).
 const EQUIP_SLOTS: Array = [
 	"Hat", "Top", "Pants", "Shoes", "Gloves",
-	"Backpack", "Sling", "Waist", "Left hand", "Right hand"
+	"Backpack", "Sling", "Left hand", "Right hand"
 ]
 
 
@@ -159,7 +159,6 @@ func _process_command(command: String) -> void:
 				_add_to_display("Usage: inv add [item_id] [count]  |  inv remove [instance_id]  |  inv list")
 
 		"equip":
-			# equip [instance_id] [slot]  — slot may be two words, e.g. "left hand"
 			if parts.size() >= 3:
 				_equip_item(parts[1], parts.slice(2))
 			else:
@@ -167,7 +166,6 @@ func _process_command(command: String) -> void:
 
 		"unequip":
 			if parts.size() >= 2:
-				# Slot name may be two words — rejoin everything after "unequip".
 				_unequip_item(parts.slice(1))
 			else:
 				_add_to_display("Usage: unequip [slot]")
@@ -243,7 +241,7 @@ func _show_help() -> void:
 	_add_to_display("inv list                        - Show all inventory instances with IDs")
 	_add_to_display("equip [instance_id] [slot]      - Equip an inventory instance into a slot")
 	_add_to_display("unequip [slot]                  - Unequip and return item to inventory")
-	_add_to_display("  Slots: Hat, Top, Pants, Shoes, Gloves, Backpack, Sling, Waist,")
+	_add_to_display("  Slots: Hat, Top, Pants, Shoes, Gloves, Backpack, Sling,")
 	_add_to_display("         Left hand, Right hand")
 	_add_to_display("body [part] [condition]         - Set one body part condition")
 	_add_to_display("body all [condition]            - Set all body parts")
@@ -372,8 +370,6 @@ func _inv_add(parts: Array[String]) -> void:
 	_add_to_display("Added %dx %s (item ID %d)" % [count, item["Item Name"], item_id])
 
 
-# Removes one from the inventory instance identified by its runtime instance_id.
-# Use "inv list" to see current instance IDs.
 func _inv_remove(parts: Array[String]) -> void:
 	if parts.size() < 3:
 		_add_to_display("Usage: inv remove [instance_id]")
@@ -391,10 +387,12 @@ func _inv_list() -> void:
 		return
 	_add_to_display("=== Inventory ===")
 	for instance in PlayerData.inventory:
-		_add_to_display("  [%d] %s  x%d" % [
+		var opened_tag := " [opened]" if instance["opened"] else ""
+		_add_to_display("  [%d] %s  x%d%s" % [
 			instance["instance_id"],
 			instance["item"]["Item Name"],
-			instance["count"]
+			instance["count"],
+			opened_tag,
 		])
 
 
@@ -402,11 +400,8 @@ func _inv_list() -> void:
 # Equipment commands
 # ------------------------------------------------------------------------------
 
-# equip [instance_id] [slot words...]
-# Slot names can be multi-word ("left hand", "right hand") so we rejoin parts.
 func _equip_item(instance_id_str: String, slot_parts: Array[String]) -> void:
 	var instance_id := int(instance_id_str)
-	# Title-case each word so "left hand" → "Left hand" (matches equipment keys).
 	var slot_words: Array[String] = []
 	for i in slot_parts.size():
 		var word: String = slot_parts[i]
@@ -424,7 +419,6 @@ func _equip_item(instance_id_str: String, slot_parts: Array[String]) -> void:
 		_add_to_display("Could not equip instance %d in slot '%s'." % [instance_id, slot])
 
 
-# unequip [slot words...]
 func _unequip_item(slot_parts: Array[String]) -> void:
 	var slot_words: Array[String] = []
 	for word in slot_parts:
@@ -495,10 +489,11 @@ func _list_locations() -> void:
 
 
 func _set_location(loc_id: String) -> void:
-	if not StaticData.areaData.has(loc_id):
+	var area = StaticData.get_area(int(loc_id))
+	if area == null:
 		_add_to_display("Location ID '%s' not found. Use 'loc list'." % loc_id)
 		return
-	PlayerData.current_location = StaticData.areaData[loc_id]
+	PlayerData.current_location = area
 	PlayerData.notify_stats_changed()
 	_add_to_display("Location set to: %s" % PlayerData.current_location.get("Area Name", "Unknown"))
 
@@ -535,10 +530,8 @@ func _reset_all() -> void:
 	PlayerData.hours   = 6
 	PlayerData.minutes = 0
 	PlayerData.adventure_steps = 0
-	if StaticData.areaData.has("1"):
-		PlayerData.current_location = StaticData.areaData["1"]
-	else:
-		PlayerData.current_location = {}
+	var home = StaticData.get_area(1)
+	PlayerData.current_location = home if home != null else {}
 	_reset_player()
 	_reset_inventory()
 	PlayerData.save_game()

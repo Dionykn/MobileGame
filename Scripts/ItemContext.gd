@@ -5,35 +5,31 @@ extends Control
 # ------------------------------------------------------------------------------
 # Shown when the player taps an inventory item.
 #
-# Condition section shows up to two progress bars:
-#   Freshness — fresh food only; decays over time; affects consumable effects.
-#   Portion   — consumable items only; how much of the item remains.
-#   Durability — equipment only (single bar, labelled "Condition").
+# Condition section shows up to three progress bars:
+#   Freshness  — fresh food and opened stable food; decays over time.
+#   Portion    — consumable items; how much of the item remains.
+#   Durability — equipment; read from instance["durability"], not item dict.
+#                Shows as "Broken" when at 0; effects are nullified.
 #
-# Both freshness and portion scale the displayed effects and what is actually
-# applied on consume.
-#
-# Progress bars color green → yellow → red as value falls, matching the
-# TextureProgressBar style used in Survivor. Percentage text is always white.
+# Stable food shows an "Open" button instead of consume actions when sealed.
+# Once opened, freshness appears and consume actions become available.
 # ==============================================================================
 
-# Thresholds shared with Survivor.gd.
 const THRESH_RED    := 0.33
 const THRESH_YELLOW := 0.67
 
 # --- Static node references (from tscn) --------------------------------------
-@onready var label_category:    Label         = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/Label5
-@onready var label_name:        Label         = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/Label
-@onready var label_weight:      Label         = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer2/Label5
+@onready var label_category:     Label         = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/Label5
+@onready var label_name:         Label         = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/Label
+@onready var label_weight:       Label         = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer2/Label5
 @onready var label_effects_vbox: VBoxContainer = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer
-@onready var label_desc:        Label         = $MarginContainer/MarginContainer/VBoxContainer/ScrollContainer/Label
-@onready var condition_section: VBoxContainer = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer3
-@onready var action_grid:       GridContainer = $MarginContainer/MarginContainer/VBoxContainer/GridContainer
-@onready var close_btn:         Button        = $MarginContainer/Button
-@onready var tex_icon:          TextureRect   = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/TextureRect
+@onready var label_desc:         Label         = $MarginContainer/MarginContainer/VBoxContainer/ScrollContainer/Label
+@onready var condition_section:  VBoxContainer = $MarginContainer/MarginContainer/VBoxContainer/VBoxContainer3
+@onready var action_grid:        GridContainer = $MarginContainer/MarginContainer/VBoxContainer/GridContainer
+@onready var close_btn:          Button        = $MarginContainer/Button
+@onready var tex_icon:           TextureRect   = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/TextureRect
 
 # --- Dynamically created condition bars --------------------------------------
-# Built in _ready() so we control layout precisely without fighting the tscn.
 var _bar_freshness:  ProgressBar = null
 var _bar_portion:    ProgressBar = null
 var _bar_durability: ProgressBar = null
@@ -57,8 +53,6 @@ func _ready() -> void:
 	_build_condition_section()
 
 
-# Clears the placeholder nodes from VBoxContainer3 in the tscn and builds
-# the freshness / portion / durability bars programmatically.
 func _build_condition_section() -> void:
 	for child in condition_section.get_children():
 		child.queue_free()
@@ -79,7 +73,6 @@ func _build_condition_section() -> void:
 	condition_section.add_child(_lbl_durability)
 	condition_section.add_child(_bar_durability)
 
-	# Hidden by default; shown selectively in _populate_condition().
 	_set_bar_visible(_lbl_freshness,  _bar_freshness,  false)
 	_set_bar_visible(_lbl_portion,    _bar_portion,    false)
 	_set_bar_visible(_lbl_durability, _bar_durability, false)
@@ -100,8 +93,7 @@ func _make_progress_bar() -> ProgressBar:
 	bar.value     = 100.0
 	bar.rounded   = true
 	bar.show_percentage = true
-	# White percentage label.
-	bar.add_theme_color_override("font_color", Color.WHITE)
+	bar.add_theme_color_override("font_color",         Color.WHITE)
 	bar.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.6))
 	bar.add_theme_constant_override("outline_size", 2)
 	bar.add_theme_font_size_override("font_size", 18)
@@ -124,10 +116,10 @@ func show_item(instance: Dictionary) -> void:
 
 	_populate_header(item, instance["count"])
 	_populate_weight(item, instance["count"])
-	_populate_effects(item, instance["freshness"], instance["portion"])
+	_populate_effects(item, instance["freshness"], instance["portion"], instance["durability"])
 	_populate_condition(instance)
 	_populate_description(item)
-	_populate_actions(item, instance["instance_id"], instance["count"])
+	_populate_actions(item, instance["instance_id"], instance["count"], instance["opened"])
 
 	visible = true
 
@@ -150,7 +142,7 @@ func _populate_header(item: Dictionary, count: int) -> void:
 
 
 func _populate_weight(item: Dictionary, count: int) -> void:
-	var unit_weight: float  = float(item.get("Weight", 0.0))
+	var unit_weight:  float = float(item.get("Weight", 0.0))
 	var total_weight: float = unit_weight * count
 	if count > 1:
 		label_weight.text = "%.2f kg  (%.2f kg total)" % [unit_weight, total_weight]
@@ -158,15 +150,15 @@ func _populate_weight(item: Dictionary, count: int) -> void:
 		label_weight.text = "%.2f kg" % unit_weight
 
 
-# Rebuilds effect labels. Effects for consumables are scaled by both freshness
-# and portion ratios so the player sees what they actually receive right now.
-func _populate_effects(item: Dictionary, freshness: float, portion: float) -> void:
-	# Keep child 0 (the static "Effects:" header label), remove the rest.
+# Effects for consumables are scaled by freshness and portion.
+# Effects for broken equipment show as "(Broken)" instead of their value.
+func _populate_effects(item: Dictionary, freshness: float, portion: float, durability: float) -> void:
 	var children := label_effects_vbox.get_children()
 	for i in range(1, children.size()):
 		children[i].queue_free()
 
-	var effects: Array[String] = _get_effect_strings(item, freshness, portion)
+	var is_broken: bool = _is_equippable(item) and durability <= 0.0
+	var effects: Array[String] = _get_effect_strings(item, freshness, portion, is_broken)
 
 	if effects.is_empty():
 		var lbl := Label.new()
@@ -181,10 +173,7 @@ func _populate_effects(item: Dictionary, freshness: float, portion: float) -> vo
 			label_effects_vbox.add_child(lbl)
 
 
-# Consumable stats are multiplied by (freshness / 100) × (portion / 100) for
-# fresh food, or just (portion / 100) for other consumables (stable food etc.).
-# Non-consumable stats (Damage, Protection, etc.) are shown as-is.
-func _get_effect_strings(item: Dictionary, freshness: float, portion: float) -> Array[String]:
+func _get_effect_strings(item: Dictionary, freshness: float, portion: float, is_broken: bool) -> Array[String]:
 	var out: Array[String] = []
 
 	var fresh_ratio:   float = (freshness / 100.0) if _is_fresh_food(item) else 1.0
@@ -200,68 +189,80 @@ func _get_effect_strings(item: Dictionary, freshness: float, portion: float) -> 
 	if item.has("Endurance"):
 		out.append("Endurance %+.0f" % (float(item["Endurance"]) * scale))
 	if item.has("Damage"):
-		out.append("Damage: %.0f" % float(item["Damage"]))
+		if is_broken:
+			out.append("Damage: (Broken)")
+		else:
+			out.append("Damage: %.0f" % float(item["Damage"]))
 	if item.has("Protection"):
-		out.append("Protection: %.0f" % float(item["Protection"]))
+		if is_broken:
+			out.append("Protection: (Broken)")
+		else:
+			out.append("Protection: %.0f" % float(item["Protection"]))
 	if item.has("Encumbrance"):
-		out.append("Carry capacity +%.0f kg" % float(item["Encumbrance"]))
+		if is_broken:
+			out.append("Carry capacity: (Broken)")
+		else:
+			out.append("Carry capacity +%.0f kg" % float(item["Encumbrance"]))
 	if item.has("Capacity"):
 		out.append("Container: %.1f L" % float(item["Capacity"]))
 	return out
 
 
 func _populate_condition(instance: Dictionary) -> void:
-	var item:      Dictionary = instance["item"]
-	var freshness: float      = instance["freshness"]
-	var portion:   float      = instance["portion"]
-	var is_fresh:  bool       = _is_fresh_food(item)
-	var is_cons:   bool       = _is_consumable(item)
-	var has_dur:   bool       = item.has("Durability") and not is_cons
+	var item:       Dictionary = instance["item"]
+	var freshness:  float      = instance["freshness"]
+	var portion:    float      = instance["portion"]
+	var durability: float      = instance["durability"]
+	var opened:     bool       = instance["opened"]
 
-	# Freshness bar — fresh food only.
-	_set_bar_visible(_lbl_freshness, _bar_freshness, is_fresh)
-	if is_fresh:
+	var is_fresh:  bool = _is_fresh_food(item)
+	var is_opened: bool = _is_stable_food(item) and opened
+	var is_cons:   bool = _is_consumable(item) and (is_fresh or is_opened or not _is_stable_food(item))
+	var has_dur:   bool = _is_equippable(item)
+
+	# Freshness bar — fresh food and opened stable food.
+	_set_bar_visible(_lbl_freshness, _bar_freshness, is_fresh or is_opened)
+	if is_fresh or is_opened:
 		_bar_freshness.value = freshness
 		_apply_bar_color(_bar_freshness, freshness)
 
-	# Portion bar — any consumable item.
+	# Portion bar — any consumable that is available to consume.
 	_set_bar_visible(_lbl_portion, _bar_portion, is_cons)
 	if is_cons:
 		_bar_portion.value = portion
 		_apply_bar_color(_bar_portion, portion)
 
-	# Durability bar — equipment only (items with Durability but not consumable).
+	# Durability bar — any equippable item; reads from instance, not item dict.
 	_set_bar_visible(_lbl_durability, _bar_durability, has_dur)
 	if has_dur:
-		_bar_durability.value = float(item.get("Durability", 100.0))
-		_apply_bar_color(_bar_durability, _bar_durability.value)
+		_bar_durability.value = durability
+		_apply_bar_color(_bar_durability, durability)
+		# Override label to signal broken state clearly.
+		_lbl_durability.text = "Condition — BROKEN" if durability <= 0.0 else "Condition"
 
-	condition_section.visible = is_fresh or is_cons or has_dur
+	condition_section.visible = is_fresh or is_opened or is_cons or has_dur
 
 
-# Colors the progress bar fill green → yellow → red as value falls,
-# matching the TextureProgressBar style used in Survivor.gd.
 func _apply_bar_color(bar: ProgressBar, value: float) -> void:
 	var pct := value / 100.0
 	var fill_color: Color
 	if pct > THRESH_YELLOW:
-		fill_color = Color(0.2, 0.8, 0.2)   # green
+		fill_color = Color(0.2, 0.8, 0.2)
 	elif pct > THRESH_RED:
-		fill_color = Color(0.9, 0.8, 0.2)   # yellow
+		fill_color = Color(0.9, 0.8, 0.2)
 	else:
-		fill_color = Color(0.8, 0.2, 0.2)   # red
+		fill_color = Color(0.8, 0.2, 0.2)
 
 	var style := StyleBoxFlat.new()
-	style.bg_color       = fill_color
+	style.bg_color                   = fill_color
 	style.corner_radius_top_left     = 4
 	style.corner_radius_top_right    = 4
 	style.corner_radius_bottom_left  = 4
 	style.corner_radius_bottom_right = 4
 	bar.add_theme_stylebox_override("fill", style)
 
-	# Background style (dark, same rounding).
 	var bg_style := StyleBoxFlat.new()
-	bg_style.bg_color       = Color(0.15, 0.15, 0.15, 0.9)
+	bg_style.bg_color                   = Color(0.15, 0.15, 0.15, 0.9)
 	bg_style.corner_radius_top_left     = 4
 	bg_style.corner_radius_top_right    = 4
 	bg_style.corner_radius_bottom_left  = 4
@@ -277,20 +278,31 @@ func _populate_description(item: Dictionary) -> void:
 # Action buttons
 # ==============================================================================
 
-func _populate_actions(item: Dictionary, instance_id: int, count: int) -> void:
+func _populate_actions(item: Dictionary, instance_id: int, count: int, opened: bool) -> void:
 	for child in action_grid.get_children():
 		child.queue_free()
 
-	var is_consumable: bool  = _is_consumable(item)
+	var is_fresh:      bool  = _is_fresh_food(item)
+	var is_stable:     bool  = _is_stable_food(item)
 	var is_literature: bool  = _is_literature(item)
 	var equip_slots:   Array = PlayerData.get_equip_slots(item)
 	var is_equippable: bool  = not equip_slots.is_empty()
-	var is_container:  bool  = item.has("Capacity") and not is_equippable
 
 	if is_literature:
 		_add_action_button("Read", func(): _on_consume(instance_id, 1.0))
 
-	elif is_consumable:
+	elif is_stable and not opened:
+		# Sealed stable food: only allow opening.
+		_add_action_button("Open", func(): _on_open_stable(instance_id))
+
+	elif is_fresh or (is_stable and opened):
+		# Fresh food or opened stable food: full consume options.
+		_add_action_button("Consume",      func(): _on_consume(instance_id, 1.0))
+		_add_action_button("Consume half", func(): _on_consume(instance_id, 0.5))
+		_add_action_button("Consume 1/4",  func(): _on_consume(instance_id, 0.25))
+
+	elif _is_consumable(item):
+		# Other consumables (drinks, alcohol, etc.).
 		_add_action_button("Consume",      func(): _on_consume(instance_id, 1.0))
 		_add_action_button("Consume half", func(): _on_consume(instance_id, 0.5))
 		_add_action_button("Consume 1/4",  func(): _on_consume(instance_id, 0.25))
@@ -302,9 +314,6 @@ func _populate_actions(item: Dictionary, instance_id: int, count: int) -> void:
 			for slot in equip_slots:
 				var captured_slot: String = slot
 				_add_action_button("Equip: " + slot, func(): _on_equip(instance_id, captured_slot))
-
-	if is_container:
-		_add_action_button("Open", func(): _on_open(instance_id))
 
 	_add_action_button("Drop", func(): _on_drop(instance_id, false))
 	if count > 1:
@@ -327,11 +336,22 @@ func _is_fresh_food(item: Dictionary) -> bool:
 	return cat == "Fresh food"
 
 
+func _is_stable_food(item: Dictionary) -> bool:
+	var cat = item.get("Loot Category", "")
+	if cat is Array:
+		return cat.has("Stable food")
+	return cat == "Stable food"
+
+
 func _is_literature(item: Dictionary) -> bool:
 	var cat = item.get("Loot Category", "")
 	if cat is Array:
 		return cat.has("Literature")
 	return cat == "Literature"
+
+
+func _is_equippable(item: Dictionary) -> bool:
+	return item.has("Equip")
 
 
 func _add_action_button(label_text: String, callback: Callable) -> void:
@@ -347,9 +367,6 @@ func _add_action_button(label_text: String, callback: Callable) -> void:
 # Action handlers
 # ==============================================================================
 
-# fraction: 1.0 = consume all remaining portion, 0.5 = half, 0.25 = quarter.
-# Effects applied = base_stat × (freshness/100 if fresh food) × (portion/100) × fraction.
-# Partial consume reduces portion and keeps the item open for further actions.
 func _on_consume(instance_id: int, fraction: float) -> void:
 	var instance = PlayerData.get_instance(instance_id)
 	if instance == null:
@@ -375,13 +392,11 @@ func _on_consume(instance_id: int, fraction: float) -> void:
 		PlayerData.endurance   = clampf(PlayerData.endurance   + float(item["Endurance"])  * effective, 0.0, 100.0)
 
 	if fraction >= 1.0:
-		# Full consume of remaining portion — remove the item.
 		PlayerData.remove_from_inventory(instance_id)
 		PlayerData.notify_stats_changed()
 		action_taken.emit()
 		_close()
 	else:
-		# Partial consume — reduce portion by the fraction consumed.
 		instance["portion"] = maxf(portion - fraction * 100.0, 0.0)
 		if instance["portion"] <= 0.0:
 			PlayerData.remove_from_inventory(instance_id)
@@ -389,12 +404,26 @@ func _on_consume(instance_id: int, fraction: float) -> void:
 			action_taken.emit()
 			_close()
 		else:
-			# Stay open; refresh bars and effect labels live.
 			PlayerData.notify_stats_changed()
 			action_taken.emit()
-			_populate_effects(item, instance["freshness"], instance["portion"])
+			_populate_effects(item, instance["freshness"], instance["portion"], instance["durability"])
 			_populate_condition(instance)
-			_populate_actions(item, instance_id, instance["count"])
+			_populate_actions(item, instance_id, instance["count"], instance["opened"])
+
+
+# Opens a sealed stable food item, giving it a freshness bar and enabling
+# consume actions. The instance is mutated in place.
+func _on_open_stable(instance_id: int) -> void:
+	if PlayerData.open_item(instance_id):
+		var instance = PlayerData.get_instance(instance_id)
+		if instance == null:
+			_close()
+			return
+		action_taken.emit()
+		# Refresh the popup to show freshness bar and consume buttons.
+		show_item(instance)
+	else:
+		_close()
 
 
 func _on_equip(instance_id: int, slot: String) -> void:
@@ -404,11 +433,6 @@ func _on_equip(instance_id: int, slot: String) -> void:
 		return
 	PlayerData.equip_item(instance_id, slot)
 	action_taken.emit()
-	_close()
-
-
-func _on_open(instance_id: int) -> void:
-	# Placeholder — loot crate / container opening to be implemented later.
 	_close()
 
 

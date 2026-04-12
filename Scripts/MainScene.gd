@@ -8,6 +8,13 @@ extends Node2D
 #
 # Time and location state live in PlayerData. The status bar listens to
 # stats_changed so it refreshes automatically whenever anything changes.
+#
+# SAVING
+# ------
+# A full save is written when the player arrives home.
+# When the app goes to the background on Android, a resume-only save is written
+# so the OS cannot silently kill a run. That resume save is deleted on the next
+# clean home-arrival save.
 # ==============================================================================
 
 # --- Node references ----------------------------------------------------------
@@ -25,14 +32,24 @@ extends Node2D
 
 func _ready() -> void:
 	PlayerData.stats_changed.connect(_update_status_bar)
-	if PlayerData.new_game:	
-		# Initialise location to Home before showing the first scene
-		PlayerData.current_location = StaticData.areaData["1"]
+	if PlayerData.new_game:
+		# Initialise location to Home before showing the first scene.
+		PlayerData.current_location = StaticData.get_area(1)
 		_show_scene(home_scene)
+		PlayerData.save_game()
 	else:
 		_show_scene(adventure_scene)
 		PlayerData.notify_stats_changed()
 	_update_status_bar()
+
+
+# ==============================================================================
+# Android background handling
+# ==============================================================================
+
+func _notification(what: int) -> void:
+	if what == 2007: # NOTIFICATION_WM_GO_BACKGROUND
+		PlayerData.save_resume()
 
 
 # ==============================================================================
@@ -56,8 +73,7 @@ func _update_status_bar() -> void:
 # ==============================================================================
 
 func _on_home_pressed() -> void:
-	_show_scene(home_scene)
-	adventure_scene.set_location_to_home()
+	_arrive_home()
 
 
 func _on_adventure_pressed() -> void:
@@ -66,6 +82,14 @@ func _on_adventure_pressed() -> void:
 
 func _on_survivor_pressed() -> void:
 	_show_scene(survivor_scene)
+
+
+# Called when the player legitimately arrives home (nav bar or go-home button).
+# Resets adventure state, saves, and switches to the home screen.
+func _arrive_home() -> void:
+	adventure_scene.set_location_to_home()
+	_show_scene(home_scene)
+	PlayerData.save_game()
 
 
 # Shows the given scene and hides the others.

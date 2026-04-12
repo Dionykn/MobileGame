@@ -33,6 +33,18 @@ func get_item(id: int) -> Variant:
 
 
 # ------------------------------------------------------------------------------
+# Returns the area dictionary for a given numeric ID, or null if not found.
+# Usage: StaticData.get_area(1)
+# ------------------------------------------------------------------------------
+func get_area(id: int) -> Variant:
+	var key := str(id)
+	if areaData.has(key):
+		return areaData[key]
+	push_warning("StaticData: area ID %d not found." % id)
+	return null
+
+
+# ------------------------------------------------------------------------------
 # Loads a JSON file and returns it as a Dictionary.
 # Returns an empty Dictionary and prints an error if anything goes wrong.
 # ------------------------------------------------------------------------------

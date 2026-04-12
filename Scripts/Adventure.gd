@@ -47,10 +47,10 @@ func _on_stats_changed() -> void:
 # ==============================================================================
 
 # Moves the player back to the Home area and resets step count.
-# Called by MainScene when the player taps the Home nav button.
+# Called by MainScene when the player arrives home.
 func set_location_to_home() -> void:
 	PlayerData.adventure_steps  = 0
-	PlayerData.current_location = StaticData.areaData["1"]
+	PlayerData.current_location = StaticData.get_area(1)
 	_update_location_display()
 
 
@@ -74,12 +74,14 @@ func _pick_random_location() -> Dictionary:
 		if accumulated >= roll:
 			return area
 
-	# Fallback — should never be reached
-	return StaticData.areaData["2"]
+	# Fallback — should never be reached.
+	return StaticData.get_area(2)
 
 
 # Updates all labels to reflect the current location and rerolls transient
 # per-visit values (zombie count, available loot).
+# Does NOT call notify_stats_changed() — callers that need the status bar
+# to reflect a new location must emit that signal themselves.
 func _update_location_display() -> void:
 	var loc: Dictionary = PlayerData.current_location
 
@@ -95,13 +97,7 @@ func _update_location_display() -> void:
 
 	btn_loot_area.disabled = (loot_amount == 0)
 
-	# Remember what we just displayed so _on_stats_changed can skip no-op signals.
 	_last_displayed_location = PlayerData.current_location
-
-	# Notify so the status bar location label refreshes via MainScene.
-	# Guard against re-entrancy: only emit if we weren't already inside a
-	# stats_changed callback (the debug-console path calls notify directly).
-	PlayerData.notify_stats_changed()
 
 
 # ==============================================================================
@@ -125,8 +121,6 @@ func _pick_random_loot() -> Array:
 	if possible_items.is_empty():
 		return []
 
-	# Pick a random number of items up to the area's loot amount, weighted by Rarity.
-	# picks can be 0, which will show an empty loot popup — this is intentional.
 	var loot:  Array = []
 	var picks := randi() % (loot_amount + 1)
 	for _i in picks:
@@ -154,6 +148,8 @@ func _on_next_area_pressed() -> void:
 	PlayerData.adventure_steps  += 1
 	PlayerData.current_location  = _pick_random_location()
 	_update_location_display()
+	# Notify so the status bar location label refreshes.
+	PlayerData.notify_stats_changed()
 
 
 func _on_loot_area_pressed() -> void:
@@ -168,12 +164,16 @@ func _on_loot_area_pressed() -> void:
 
 
 func _on_go_home_pressed() -> void:
+	# TODO: implement "turn around" — subtract adventure steps one at a time,
+	# passing through random areas and advancing time until steps reach zero.
 	pass
 
 
 func _on_attack_zombies_pressed() -> void:
+	# TODO: implement combat.
 	pass
 
 
 func _on_claim_area_pressed() -> void:
+	# TODO: implement area claiming.
 	pass
